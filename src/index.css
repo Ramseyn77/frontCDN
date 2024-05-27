@@ -10,3 +10,16 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+.text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.6; /* Increase line height if necessary */
+    font-size: 14px; /* Adjust font size if needed */
+  }
+  
+  
