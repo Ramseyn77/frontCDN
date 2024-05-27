@@ -59,7 +59,7 @@ const SearchList = () => {
             ))}
           </div>
         ) : (
-          <div className="text-gray-500 mt-2">Aucun article trouvé pour le mot "{word}".</div>
+          <div className="mt-40 text-gray-500 mt-2 mx-auto flex flex-col items-center justify-center sm:w-[50%] w-full md:w-[70%]">Aucun article trouvé pour le mot "{word}".</div>
         )}
       </div>
     </div>
