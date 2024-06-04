@@ -30,7 +30,7 @@ const Navbar = ({ link }) => {
               Home
             </NavLink>
             <NavLink
-              to="/"
+              to="/articles"
               className={`text-black font-bold text-sm ${activeLink === 'articles' ? 'text-gray-400' : ''}`}
             >
               Articles

@@ -31,7 +31,7 @@ const SideBar = ({visible}) => {
                       Home
                     </NavLink>
                     <NavLink
-                      to="/"
+                      to="/articles"
                       className={`text-black font-bold text-sm hover:text-gray-400 `}
                       onClick={handleMenuClick}
                     >

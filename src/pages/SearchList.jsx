@@ -40,7 +40,7 @@ const SearchList = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar link="articles" />
-      <div className="flex-grow overflow-auto py-4 px-4 md:px-8">
+      <div className="flex-grow overflow-auto py-4 px-4 md:px-8 h-[70vh] ">
         {results.length > 0 ? (
           <div className="w-full flex flex-col items-center">
             {results.map((item, i) => (
