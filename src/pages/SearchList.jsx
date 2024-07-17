@@ -8,6 +8,7 @@ const SearchList = () => {
   const [articles, setArticles] = useState([]);
   const [results, setResults] = useState([]);
 
+  const user_id = localStorage.getItem('user_id')
   useEffect(() => {
     const fetchArticles = async () => {
       try {
@@ -37,6 +38,23 @@ const SearchList = () => {
     filterArticles()
   }, [word, articles])
 
+  const navigate = useNavigate()
+  const handleClick =  async(id) => {
+    try {
+      if (user_id) {
+        const dataSend = {
+          user_id : user_id,
+          article_id : id
+        }
+        const response = await axios.post('http://localhost:8000/api/consultations', dataSend)
+        console.log(response.data.message)
+      }
+      navigate('/articles/show/'+id)
+    } catch (error) {
+      console.error('message', error)
+    }
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar link="articles" />
@@ -46,7 +64,7 @@ const SearchList = () => {
             {results.map((item, i) => (
               <div key={i} className="sm:w-[50%] w-full md:w-[70%] mx-auto flex flex-col items-center justify-center space-x-6 mb-3 py-2 px-3 rounded-md">
                 <div className="flex flex-row items-center w-full space-x-3">
-                  <button type="button" className="text-blue-500 font-semibold text-sm sm:text-md hover:underline hover:text-blue-400">
+                  <button type="button" onClick={(e) => handleClick(item.id)} className="text-blue-500 font-semibold text-sm sm:text-md hover:underline hover:text-blue-400">
                     {`Articles ${item.numero} :`}
                   </button>
                   <div className="text-sm sm:text-md font-semibold">{item.nom}</div>

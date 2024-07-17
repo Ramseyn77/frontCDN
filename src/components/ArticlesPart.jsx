@@ -119,25 +119,25 @@ const ArticlesPart = () => {
   }
 
   return (
-    <div className='w-[75%] h-auto p-4'>
-      <div className="flex flex-row items-center justify-between p-2 px-6 mb-2">
+    <div className='sm:w-[75%] w-[70%] h-auto p-4'>
+      <div className="flex flex-row items-center justify-between p-2 px-2 sm:px-6 mb-2">
         <button
         type="button"
         onClick={handleClickL}
-        className={`" text-md border border-black py-1 px-6 rounded-sm items-center justify-center ${activLink == 'livre' ? ' items-center justify-center bg-gray-400 py-1 text-white font-semibold px-6 rounded-sm border-none' : ''} font-semibold rounded-sm"`}
+        className={`" text-sm sm:text-md border border-black py-1 px-2 sm:px-6 rounded-sm items-center justify-center ${activLink == 'livre' ? ' items-center justify-center bg-gray-400 py-1 text-white font-semibold px-6 rounded-sm border-none' : ''} font-semibold rounded-sm"`}
         >
             Livres
         </button>
 
         <button type="button"
         onClick={handleClickT}
-        className={`" text-md border border-black py-1 px-6 rounded-sm items-center justify-center ${activLink == 'titre' ? ' items-center justify-center bg-gray-400 py-1 text-white font-semibold px-6 rounded-sm border-none' : ''} font-semibold rounded-sm"`}
+        className={`" text-sm sm:text-md border border-black py-1 px-2 sm:px-6  rounded-sm items-center justify-center ${activLink == 'titre' ? ' items-center justify-center bg-gray-400 py-1 text-white font-semibold px-6 rounded-sm border-none' : ''} font-semibold rounded-sm"`}
         >
             Titres
         </button>
         <button type="button"
         onClick={handleClickC}
-        className={`" text-md border border-black py-1 px-6 rounded-sm items-center justify-center ${activLink == 'chapitre' ? ' items-center justify-center bg-gray-400 py-1 text-white font-semibold px-6 rounded-sm border-none' : ''} font-semibold rounded-sm "`}
+        className={`" text-sm sm:text-md border border-black py-1 px-2 sm:px-6  rounded-sm items-center justify-center ${activLink == 'chapitre' ? ' items-center justify-center bg-gray-400 py-1 text-white font-semibold px-6 rounded-sm border-none' : ''} font-semibold rounded-sm "`}
         >
             Chapitres
         </button>
@@ -149,19 +149,19 @@ const ArticlesPart = () => {
               value={value}
               onChange={(e) => search(e)}
               placeholder={`${activLink == 'titre' ? "Rechercher un titre..." : "Rechercher un chapitre..."} `}
-              className="w-[60%] flex-grow outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-3 py-2 sm:text-base md:text-sm"
+              className="w-[80%] sm:w-[60%] flex-grow outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-3 py-2 sm:text-base md:text-sm"
             />
             ) : <div></div>
       }
       </div>
 
       <div className="w-full flex flex-col space-y-4 px-6 py-3 items-center justify-center mt-6 h-auto">
-          <div className='w-full flex flex-col items-center overflow-y-auto max-h-[60vh]'>
+          <div className='w-full flex flex-col items-center overflow-y-auto md:max-h-[70vh] max-h-[60vh]'>
             { activLink == 'livre' &&
               ( 
                 livres.map((item, i) => {
                   return (
-                    <CardH key={0+i} number={item.id} name={item.nom} onClick={() => handleCardClick(item.id)} />
+                    <CardH key={i} number={item.id} name={item.nom} onClick={() => handleCardClick(item.id)} />
                   )
                 })
               )
@@ -172,7 +172,7 @@ const ArticlesPart = () => {
                 titres.length > 0 ? (
                   titres.map((item, i) => {
                     return (
-                      <CardT key={0+i} number={item.id} name={item.nom}  onClick={() => handleCardClickT(item.id)} />
+                      <CardT key={i} number={item.id} name={item.nom}  onClick={() => handleCardClickT(item.id)} />
                     )
                   })
                 ) : (
@@ -185,7 +185,7 @@ const ArticlesPart = () => {
               ( 
                 chapitres.map((item, i) => {
                   return  (
-                    <CardC key={0+i} number={item.id} name={item.nom} onClick={() =>  handleCardClickC(item.id)} />
+                    <CardC key={i} number={item.numero} name={item.nom} onClick={() =>  handleCardClickC(item.id)} />
                   )
                 })
               )

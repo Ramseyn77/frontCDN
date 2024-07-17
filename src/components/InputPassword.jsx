@@ -21,8 +21,8 @@ const InputPassword = ({ label, onChange, name, value, placeholder, isLogin }) =
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            className='w-full h-[100%] outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3  sm:text-base md:text-sm' // Adjust font size for larger screens
-          />
+            className={`w-full h-[100%] outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3  sm:text-base md:text-sm ${show && 'text-gray-900' }`  } // Adjust font size for larger screens
+            required />
           <button
             type='button'
             className="h-full px-2 absolute right-2 top-1/2 transform -translate-y-1/2" 

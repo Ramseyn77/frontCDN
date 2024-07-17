@@ -6,20 +6,40 @@ import search from '../uploads/search.png'
 import axios from 'axios';
 import {useNavigate, NavLink} from 'react-router-dom'
 import SideBar from '../components/SideBar'
+import {MenuIcon, UserCircle } from 'lucide-react';
+import Chargement from '../components/Chargement';
 
 const Search = () => {
+  const [user, setUser] = useState(null);
   const [articles, setArticles] = useState([])
   const [results, setResults] = useState([])
   const [showMenu, setShowMenu] = useState(false);
+  const [showDiv, setShowDiv] = useState(false);
   const navigate = useNavigate()
   
+  const user_id = localStorage.getItem('user_id')
   useEffect(() => {
     fetchArticles()
+    const accessToken = localStorage.getItem('accessToken');
+    const userc = localStorage.getItem('user');
+    const id = localStorage.getItem('user_id');
+    if (accessToken && userc) {
+      fetchUser(id);
+    }
   },[])
 
   const handleMenuClick = () => {
     setShowMenu(!showMenu)
   };
+
+  const handleProfilClick = () => {
+    user ? setShowDiv(!showDiv) : setShowDiv(false)
+  }
+
+  const handlePClick = () => {
+    setShowDiv(false)
+    navigate('/profil')
+  }
 
   const fetchArticles = async () => {
     try {
@@ -29,6 +49,15 @@ const Search = () => {
       console.log('Bad request')
     }
   }
+
+  const fetchUser = async (id) => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/users/' + id);
+      setUser(response.data.user);
+    } catch (error) {
+      console.error('Message', error);
+    }
+  };
     
   const [value, setValue] = useState('')
   const [showResults, setShowResults] = useState(false)
@@ -51,14 +80,29 @@ const Search = () => {
     }
   }
 
+  const handleHome = () => {
+    navigate('/')
+  }
+
   const onchange = (e) => {
     setValue(e.target.value)
     filterWords()
     setShowResults(true)
   }
 
-  const handleClick = (item) => {
-    navigate('/search/'+item)
+  const handleClick = async (item) => {
+    try {
+      const dataSend = {
+        user_id : user_id,
+        mot : item
+      }
+      const response = await axios.post('http://localhost:8000/api/recherches', dataSend)
+      console.log(response.data.message)
+      navigate('/search/'+item)
+    } catch (error) {
+      console.error('message',error)
+    }
+    
   }
 
   return (
@@ -66,7 +110,7 @@ const Search = () => {
         <div className="flex flex-row items-center justify-between p-4 relative">
           {/* Logo */}
           <div className="items-center justify-center flex flex-col">
-            <img src={logo} alt="Logo" className="h-12 w-12 bg-transparent rounded-full" />
+            <img src={logo} alt="Logo" onClick={handleHome} className="h-12 w-12 bg-transparent rounded-full hover:cursor-pointer" />
           </div>
           {/* Search Bar */}
           <div className="flex flex-row justify-center items w-[80%]">
@@ -81,15 +125,27 @@ const Search = () => {
           {/* Menu Button & Profile (Visible on medium and larger screens) */}
           <div className="hidden md:flex flex-row items-center justify-between py-1 px-2 space-x-6">
             <div className="items-center justify-center flex flex-col">
-              <img src={profil} alt="profile" className="h-8 w-8 bg-transparent rounded-full hover:cursor-pointer" />
+              {
+                user && user.profil ?(
+                  <img src= {logo} alt="Logo" onClick={handleProfilClick} className="h-6 w-6 bg-transparent hover:cursor-pointer rounded-full" />
+                ) : (
+                  <UserCircle onClick={handleProfilClick} className="h-6 w-6 bg-transparent hover:cursor-pointer rounded-full" />
+                )
+              }
+              {showDiv && (
+              <div className="absolute top-16 right-10 w-32 bg-white border border-gray-300 shadow-lg rounded-md py-2 gap-2">
+                <button onClick={handlePClick} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Profil</button>
+                <button className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Déconnexion</button>
+              </div>
+            )}
             </div>
             <div className="items-center justify-center flex flex-col">
-              <img src={menu} alt="menu" onClick={handleMenuClick} className="h-8 w-8 bg-transparent rounded-full hover:cursor-pointer" />
+              <MenuIcon onClick={handleMenuClick} className="h-6 w-6 bg-transparent rounded-full hover:cursor-pointer" />
             </div>
           </div>
           {/* Menu Button (Visible on small screens) */}
           <div className="md:hidden items-center justify-center flex flex-col">
-            <img src={menu} alt="menu" className="h-8 w-8 bg-transparent rounded-full hover:cursor-pointer" 
+            <MenuIcon className="h-8 w-8 bg-transparent rounded-full hover:cursor-pointer" 
             onClick={handleMenuClick} />
           </div>
           {/* Mini Sidebar (Visible when menu is open) */}

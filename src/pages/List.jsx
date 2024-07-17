@@ -1,14 +1,15 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Navbar from '../components/Navbar';
 
 const List = () => {
     const {id,type} = useParams()
     const [articles, setArticles] = useState([])
 
+    const user_id = localStorage.getItem('user_id')
     useEffect(() => {
-        fetcArticles()
+      fetcArticles()
     },[])
 
     const fetcArticles = async () => {
@@ -26,6 +27,22 @@ const List = () => {
         console.error('Error whith articles', error)
        }
     }
+    const navigate = useNavigate()
+    const handleClick =  async(id) => {
+      try {
+        if (user_id) {
+          const dataSend = {
+            user_id : user_id,
+            article_id : id
+          }
+          const response = await axios.post('http://localhost:8000/api/consultations', dataSend)
+          console.log(response.data.message)
+        }
+        navigate('/articles/show/'+id)
+      } catch (error) {
+        console.error('message', error)
+      }
+    }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -36,7 +53,7 @@ const List = () => {
             {articles.map((item, i) => (
               <div key={i} className="sm:w-[50%] w-full md:w-[70%] mx-auto flex flex-col items-center justify-center space-x-6 mb-3 py-2 px-3 rounded-md">
                 <div className="flex flex-row items-center w-full space-x-3">
-                  <button type="button" className="text-blue-500 font-semibold text-sm sm:text-md hover:underline hover:text-blue-400">
+                  <button type="button" onClick={(e) => handleClick(item.id)} className="text-blue-500 font-semibold text-sm sm:text-md hover:underline hover:text-blue-400">
                     {`Articles ${item.numero} :`}
                   </button>
                   <div className="text-sm sm:text-md font-semibold">{item.nom}</div>

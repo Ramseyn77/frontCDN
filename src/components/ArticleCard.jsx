@@ -1,18 +1,16 @@
 import React from 'react'
 
-const ArticleCard = ({number,name,content}) => {
+const ArticleCard = ({number,name,content, onClick}) => {
   return (
-    <div className="w-full bg-white shadow-lg flex flex-col px-3 py-2 rounded-sm mb-2">
-        <div className="flex flex-row items-center mb-2 space-x-1">
-            <span className='text-sm font-semibold'>Article 366 : </span>
-            <span className='text-sm'>Lorem ipsum dolor sit amet fugiat</span>
+    <button onClick={onClick} className="w-full bg-white shadow-lg hover:bg-gray-200 flex flex-col sm:px-3 sm:py-2 px-1 rounded-sm mb-2">
+        <div className="flex flex-col space-x-1 sm:flex-row md:flex-col items-center justify-center mb-2 space-x-1 lg:w-full ">
+            <span className=' text-xs sm:text-sm font-semibold'>{'Article '+ number +' :'} </span>
+            <span className='text-xs sm:text-sm'>{name}</span>
         </div>
-        <div className="px-2 text-sm" style={{display: '-webkit-box',WebkitLineClamp: 2,WebkitBoxOrient: 'vertical',overflow: 'hidden',}}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga animi ullam possimus, sunt a
-            nesciunt tempore qui magni, expedita Beatae eligendi expedita dolorem! . Fuga animi ullam possimus, sunt a
-            rerum sit atque saepe? Earum, placeat ullam. Beatae eligendi expedita dolorem!
+        <div className="sm:px-2 px-1 text-xs sm:text-sm" style={{display: '-webkit-box',WebkitLineClamp: 2,WebkitBoxOrient: 'vertical',overflow: 'hidden',}}>
+            {content}
         </div>
-    </div>
+    </button>
   )
 }
 

@@ -1,18 +1,20 @@
-import React from 'react'
+import {React, useState, useEffect} from 'react'
 import Navbar from '../components/Navbar'
-import ArticlesPart from '../components/ArticlesPart'
+import ArticlePart from '../components/ArticlePart'
 import PartX from '../components/PartX'
 
-const Articles = () => {
+const Article = () => {
+
+
   return (
     <div className='w-screen h-screen overflow-hidden'>
       <Navbar link={'articles'} />
       <div className="flex flex-row">
-        <ArticlesPart />
-        <PartX title={'Récement consulter'} type={'article'} />
+        <ArticlePart />
+        <PartX title={'Faits'} type={'fait'} />
       </div>
     </div>
   )
 }
 
-export default Articles
+export default Article

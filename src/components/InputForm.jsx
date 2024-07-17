@@ -9,8 +9,8 @@ const InputForm = ({label,onChange,name,value,placeholder}) => {
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className='w-full outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3 sm:text-base md:text-sm' // Adjust font size for larger screens
-      />
+        className='w-full outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3 sm:text-base md:text-sm' 
+        required />
     </div>
   )
 }
