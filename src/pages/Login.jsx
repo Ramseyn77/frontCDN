@@ -67,8 +67,10 @@ const Login = () => {
         </div>
         <form method='post' className="flex flex-col space-y-6 justify-center w-[50%] border-1">
           <div className='flex flex-col w-full'>
-            <InputForm name={'email'} label={'Email'} onChange={ (e) => handleChange(e)} value={userData.email} placeholder='Entrer vôtre adresse email ' />
-            <InputPassword name={'password'} label={'Mot de passe'} onChange={ (e) => handleChange(e)} value={userData.password} placeholder='Entrer le mot de passe' isLogin={true} />
+            <InputForm name={'email'} label={'Email'} onChange={ (e) => handleChange(e)} value={userData.email} 
+            placeholder='Entrer vôtre adresse email ' error={errorMessage ? true : false} />
+            <InputPassword name={'password'} label={'Mot de passe'} onChange={ (e) => handleChange(e)} value={userData.password} 
+            placeholder='Entrer le mot de passe' isLogin={true} error={errorMessage ? true : false} />
           </div>
           <div className="flex flex-col w-full">
             <button type="submit" 

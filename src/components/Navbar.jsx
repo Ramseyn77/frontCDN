@@ -9,7 +9,7 @@ import Chargement from './Chargement';
 
 const Navbar = ({ link }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);  // Set initial user state to null
+  const [user, setUser] = useState(null);
   const [activeLink, setActiveLink] = useState(link);
   const [showMenu, setShowMenu] = useState(false);
   const [showDiv, setShowDiv] = useState(false);
@@ -19,12 +19,17 @@ const Navbar = ({ link }) => {
   };
 
   const handleProfilClick = () => {
-    user ? setShowDiv(!showDiv) : setShowDiv(false)
+    setShowDiv(!showDiv) 
   }
 
   const handleClick = () => {
     setShowDiv(false)
     navigate('/profil')
+  }
+
+  const handleConnectClick = () => {
+    setShowDiv(false)
+    navigate('/login')
   }
 
   useEffect(() => {
@@ -115,9 +120,17 @@ const Navbar = ({ link }) => {
               )
             }
             {showDiv && (
-            <div className="absolute top-10 right-10 w-32 bg-white border border-gray-300 shadow-lg rounded-md py-2 gap-2">
-              <button onClick={handleClick} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Profil</button>
-              <button className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Déconnexion</button>
+            <div className="absolute top-10 right-10 z-100 w-32 bg-white border border-gray-300 shadow-lg rounded-md py-2 gap-2">
+              {
+                user != null ? (
+                  <>
+                    <button onClick={handleClick} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Profil</button>
+                    <button className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Déconnexion</button>
+                  </>
+                ) :(
+                  <button onClick={handleConnectClick} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'> Se Connecter </button>
+                )
+              }
             </div>
           )}
           </div>

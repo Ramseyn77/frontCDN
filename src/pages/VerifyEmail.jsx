@@ -8,19 +8,27 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const VerifyEmail = () => {
   const [code, setCode] = useState(null)
+  const [error, setError] = useState('')
   const {id} = useParams()
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setCode(e.target.value)
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = {code}
+    const data = {'code' : code}
+    console.log(data)
     try {
-      const response = await axios.get('http://localhost:8000/api/users/emailVerify/'+id, data)
-      
+      const response = await axios.post('http://localhost:8000/api/users/emailVerify/'+id, data)
+      console.log(response)
+      navigate('/login')
     } catch (error) {
-      console.log(error)
+      if (error.response && error.response.status === 401) {
+        setError('INcompatible code');
+      } else {
+        console.error(error);
+      }
     }
   }
 
@@ -36,7 +44,8 @@ const VerifyEmail = () => {
             <div className='flex flex-col justify-center items-center'>
               <div className=' sm:w-[45%] w-full flex flex-col space-y-3 mb-2'>
                 <label for='code' className='text-black font-semibold text-md'>Code de confirmation</label>
-                <input name='code' placeholder='Entrer vôtre code' onChange={ (e) => handleChange(e)} className='w-full outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3' />
+                <input name='code' placeholder='Entrer vôtre code' onChange={ (e) => handleChange(e)} 
+                className={`w-full outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3 ${error ? 'border-red-300 ' : ''}`} />
               </div>
             </div>
             <div className="flex flex-col w-full justify-center items-center mt-4">

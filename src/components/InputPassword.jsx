@@ -3,7 +3,7 @@ import visible from '../uploads/eye-visible.png'
 import notvisible from '../uploads/eye-notVisible.png'
 import {NavLink} from 'react-router-dom'
 
-const InputPassword = ({ label, onChange, name, value, placeholder, isLogin }) => {
+const InputPassword = ({ label, onChange, name, value, placeholder, isLogin, error }) => {
     const [show, setShow] = useState(false);
     const handleVisible = () => {
         setShow(!show)
@@ -21,7 +21,7 @@ const InputPassword = ({ label, onChange, name, value, placeholder, isLogin }) =
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            className={`w-full h-[100%] outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3  sm:text-base md:text-sm ${show && 'text-gray-900' }`  } // Adjust font size for larger screens
+            className={`w-full h-[100%] outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3  sm:text-base md:text-sm ${error ? 'bg-red-300': ''} ${show && 'text-gray-900' }`  } 
             required />
           <button
             type='button'

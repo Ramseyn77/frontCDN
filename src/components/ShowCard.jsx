@@ -85,9 +85,12 @@ const ShowCard = ({ onShowForm, content, numero, name }) => {
             <Mic className='flex flex-col items-center justify-center font-semibold text-violet-500' size={23} />
           </button>
             {showLangage && (
-              <div className="absolute overflow-y-auto w-60 max-h-[100px] top-0 left-10 w-auto bg-white border border-gray-300 shadow-lg rounded-md py-2 gap-2">
+              <div className="absolute overflow-y-auto w-60 max-h-[100px] top-0 left-10 w-auto bg-white border border-gray-300 shadow-lg 
+              rounded-md py-2 gap-2">
                 {voices.map((voice) => (
-                  <button onClick={(e) => handleSpeak(voice.name)} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>{voice.name} ({voice.lang})</button>
+                  <button onClick={(e) => handleSpeak(voice.name)} 
+                  className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>
+                  {voice.name} ({voice.lang})</button>
                 ))}
               </div>
             )}

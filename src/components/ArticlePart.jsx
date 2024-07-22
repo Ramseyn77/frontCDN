@@ -47,6 +47,10 @@ const ArticlePart = () => {
       setShowForm(false)
     }
 
+    const handleReload = () => {
+      if (submitButtonText === 'Commentaire') fetchComments()
+    }
+
     const handleSubmit = async (e) => {
       e.preventDefault()
       const dataSend = {
@@ -57,6 +61,7 @@ const ArticlePart = () => {
       try {
         if (submitButtonText === 'Commentaire') {
           const response = await axios.post('http://localhost:8000/api/comments', dataSend)
+          handleReload()
         }
         if (submitButtonText === 'Fait') {
           const response = await axios.post('http://localhost:8000/api/events', dataSend)   

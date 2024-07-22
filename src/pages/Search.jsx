@@ -33,12 +33,17 @@ const Search = () => {
   };
 
   const handleProfilClick = () => {
-    user ? setShowDiv(!showDiv) : setShowDiv(false)
+    setShowDiv(!showDiv) 
   }
 
   const handlePClick = () => {
     setShowDiv(false)
     navigate('/profil')
+  }
+
+  const handleConnectClick = () => {
+    setShowDiv(false)
+    navigate('/login')
   }
 
   const fetchArticles = async () => {
@@ -115,11 +120,9 @@ const Search = () => {
           {/* Search Bar */}
           <div className="flex flex-row justify-center items w-[80%]">
             <input
-              name="search"
-              value={value}
-              onChange={(e) => onchange(e)}
-              placeholder="Saisissez le mot clé..."
-              className="flex-grow outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3 sm:text-base md:text-sm"
+              name="search" value={value} onChange={(e) => onchange(e)} placeholder="Saisissez le mot clé..."
+              className="flex-grow outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900
+               focus:border-blue-300 px-2 py-3 sm:text-base md:text-sm"
             />
           </div>
           {/* Menu Button & Profile (Visible on medium and larger screens) */}
@@ -134,8 +137,15 @@ const Search = () => {
               }
               {showDiv && (
               <div className="absolute top-16 right-10 w-32 bg-white border border-gray-300 shadow-lg rounded-md py-2 gap-2">
-                <button onClick={handlePClick} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Profil</button>
-                <button className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Déconnexion</button>
+                {
+                user ? (
+                  <>
+                    <button onClick={handleClick} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Profil</button>
+                    <button className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Déconnexion</button>
+                  </>
+                ) :
+                  <button onClick={handleConnectClick} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Se Connecter</button>
+                }
               </div>
             )}
             </div>

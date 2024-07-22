@@ -4,7 +4,7 @@ import axios from 'axios'
 import EventCard from './EventCard'
 import { useParams, useNavigate } from 'react-router-dom'
 
-const PartX = ({title, type}) => {
+const PartX = ({title, type, reload}) => {
   const {id} = useParams()
   const [articles, setArticles] = useState([])
   const [events, setEvents] = useState([])
@@ -20,7 +20,22 @@ const PartX = ({title, type}) => {
     if (type === 'fait') {
       fetchEvents(id)
     }
+    reinisialize()
   },[])
+
+  const reinisialize = async () => {
+    if(reload) {
+      if(type === 'redacteur'){
+        fetchArticles()
+      }
+      if (type === 'article') {
+        fetchRessources()
+      }
+      if (type === 'fait') {
+        fetchEvents(id)
+      }
+    }
+  }
 
   const fetchEvents = async (id) =>{
     try {
@@ -77,7 +92,7 @@ const PartX = ({title, type}) => {
 
   return (
     <div className='w-[30%] sm:w-[25%] md:h-[1200px] h-[582px]  py-0 px-2 bg-gray-300'>
-        <div className="w-full text-black h-[5%] text-md sm:text-2xl md:text-lg font-bold flex flex-col items-center justify-center mb-3 sticky top-0 bg-gray-300 z-10 ">
+        <div className="w-full text-black h-[5%] text-md sm:text-2xl md:text-lg font-bold flex flex-col items-center justify-center mb-3 top-0 bg-gray-300 ">
             {title}
         </div>
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import {useNavigate} from 'react-router-dom'
 import LogNavbar from '../components/LogNavbar'
 import InputForm from '../components/InputForm';
@@ -40,9 +40,9 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get('http://localhost:8000/api/users', user)
+      const response = await axios.post('http://localhost:8000/api/users', user)
       if (response.data.user) {
-        navigate('/emailVerify/'+user.id)
+        navigate('/emailVerify/'+response.data.user.id)
         alert(response.data.code)
       }
     } catch (error) {
@@ -66,16 +66,16 @@ const Register = () => {
             <div className='flex flex-col sm:flex-row justify-between items-center'>
               <div className=' sm:w-[45%] w-full flex flex-col space-y-3 mb-2'>
                 <label for='nom' className='text-black font-semibold text-md'>Nom</label>
-                <input name='nom' placeholder='Entrer vôtre nom' onChange={ (e) => handleChange(e)} className='w-full outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3' value={user.nom} />
+                <input name='nom' placeholder='Entrer vôtre nom' onChange={ (e) => handleChange(e)} className={`w-full outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3 ${errors.nom ? 'border-red-300' : ''}`} value={user.nom} />
               </div>
               <div className=' sm:w-[45%] w-full flex flex-col space-y-3 mb-2'>
                 <label for='prenom' className='text-black font-semibold text-md'>Prénoms</label>
-                <input name='prenom' placeholder='Entrer vos prénoms' onChange={ (e) => handleChange(e)} className='w-full outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3' value={user.prenom} />
+                <input name='prenom' placeholder='Entrer vos prénoms' onChange={ (e) => handleChange(e)} className={`w-full outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3 ${errors.prenom ? 'border-red-300' : ''}`} value={user.prenom} />
               </div>
             </div>
-            <InputForm name={'email'} label={'Email'} onChange={ (e) => handleChange(e)} placeholder='Entrer une adresse email ' value={user.email} />
-            <InputPassword name={'password'} onChange={ (e) => handleChange(e)} label={'Mot de passe '} placeholder='Entrer le mot de passe ' value={user.password} />
-            <InputPassword name={'cpassword'} onChange={ (e) => handleChange(e)} label={'Confirmer le mot de passe'} placeholder='Confirmer le mot de passe' value={user.cpassword} />
+            <InputForm name={'email'} label={'Email'} onChange={ (e) => handleChange(e)} placeholder='Entrer une adresse email ' value={user.email} error={errors.email ? true : false} />
+            <InputPassword name={'password'} onChange={ (e) => handleChange(e)} label={'Mot de passe '} placeholder='Entrer le mot de passe ' value={user.password} error={errors.password ? true : false} />
+            <InputPassword name={'cpassword'} onChange={ (e) => handleChange(e)} label={'Confirmer le mot de passe'} placeholder='Confirmer le mot de passe' value={user.cpassword} error={errors.cpassword ? true : false} />
           </div>
           <div className="flex flex-col w-full">
             <button type="submit" 
