@@ -76,7 +76,7 @@ const ShowCard = ({ onShowForm, content, numero, name }) => {
         <div className="text-white font-bold text-lg">{'Article '+ numero + ' :'}</div>
         <div className="text-white font-semibold text-md">{name}</div>
       </div>
-      <div className="flex flex-col justify-center p-3 max-h-[300px] overflow-y-auto">
+      <div className="flex flex-grow justify-center p-3 max-h-[300px] overflow-y-auto">
         {content}
       </div>
       <div className='flex flex-row items-center justify-between py-3 px-4 bg-gray-200'>

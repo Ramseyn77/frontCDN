@@ -76,7 +76,7 @@ const QuizO = ({ id, qst_id, fetchRessource }) => {
                             isCorrect === false ? 'bg-red-500' : 'bg-green-500'
                         }`}
                     >
-                        <ArrowRight /> 
+                        <ArrowRight className='h-6 w-6 font-semibod' /> 
                     </button>
                 </form>
                 {isCorrect === false && (

@@ -3,6 +3,7 @@ import CommentCard from './CommentCard'
 import ShowCard from './ShowCard'
 import Navbar from './Navbar'
 import { useParams } from 'react-router-dom'
+import { CheckCircle, X } from 'lucide-react'
 import axios from 'axios'
 
 const ArticlePart = () => {
@@ -47,9 +48,6 @@ const ArticlePart = () => {
       setShowForm(false)
     }
 
-    const handleReload = () => {
-      if (submitButtonText === 'Commentaire') fetchComments()
-    }
 
     const handleSubmit = async (e) => {
       e.preventDefault()
@@ -61,7 +59,7 @@ const ArticlePart = () => {
       try {
         if (submitButtonText === 'Commentaire') {
           const response = await axios.post('http://localhost:8000/api/comments', dataSend)
-          handleReload()
+          if (response.status===200 ||response.status===201) fetchComments()
         }
         if (submitButtonText === 'Fait') {
           const response = await axios.post('http://localhost:8000/api/events', dataSend)   
@@ -89,8 +87,14 @@ const ArticlePart = () => {
               </div>
 
               <div className="w-full flex flex-row items-center justify-between px-3 mt-2 ">
-                <button type="submit" onClick={handleAnnul} className='px-3 py-2 text-sm text-white font-bold bg-red-400 rounded-md hover:bg-red-300 transition-colors' >Annuler</button>
-                <button type="submit" onClick={(e) => handleSubmit(e)} className='px-3 py-2 text-sm text-white font-bold bg-blue-400 rounded-md hover:bg-[#6acde5] transition-colors'>{submitButtonText}</button>
+                <button type="submit" onClick={handleAnnul} className='flex flex-row gap-2 items-center px-3 py-2 text-sm text-white font-bold bg-red-400 rounded-md hover:bg-red-300 transition-color' >
+                  Annuler
+                  <X className='inline h-4 w-4 ' />
+                </button>
+                <button type="submit" onClick={(e) => handleSubmit(e)} className='flex flex-row gap-2 items-center px-3 py-2 text-sm text-white font-bold bg-blue-400 rounded-md hover:bg-[#6acde5] transition-color'>
+                  {submitButtonText}
+                  <CheckCircle className='inline h-4 w-4 ' />
+                </button>
               </div>
             </form>
           ) : (

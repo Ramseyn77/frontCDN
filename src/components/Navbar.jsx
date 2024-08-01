@@ -4,7 +4,7 @@ import axios from 'axios';
 import logo from '../uploads/logo.jpeg';
 import searchIcon from '../uploads/search-black.png';
 import SideBar from '../components/SideBar';
-import {UserCircle, MenuIcon} from 'lucide-react'
+import {UserCircle, MenuIcon, PlusCircleIcon} from 'lucide-react'
 import Chargement from './Chargement';
 
 const Navbar = ({ link }) => {
@@ -13,10 +13,14 @@ const Navbar = ({ link }) => {
   const [activeLink, setActiveLink] = useState(link);
   const [showMenu, setShowMenu] = useState(false);
   const [showDiv, setShowDiv] = useState(false);
+  const [showOption, setShowOption] = useState(false);
 
   const handleMenuClick = () => {
     setShowMenu(!showMenu);
   };
+  const handleOptionClick = () => {
+    setShowOption(!showOption)
+  }
 
   const handleProfilClick = () => {
     setShowDiv(!showDiv) 
@@ -49,19 +53,33 @@ const Navbar = ({ link }) => {
       console.error('Message', error);
     }
   };
+  const handleLogout = async () => {
+    try {
+      await axios.post('http://localhost:8000/api/logout');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('user');
+      localStorage.removeItem('user_id');
+      navigate('/login');
+    } catch (error) {
+      console.error('Error logging out', error);
+    }
+  };
 
   const renderAddLink = () => {
     if (user && user.status === 2) {
       return (
-        <NavLink
-          to="/add"
-          className={`text-black font-bold text-sm ${activeLink === 'add' ? 'text-gray-400' : ''}`}
-        >
-          Ajouter
-        </NavLink>
+        <div className="items-center justify-center flex flex-col relative group">
+          <PlusCircleIcon onClick={handleOptionClick} className="h-6 w-6 bg-transparent hover:cursor-pointer rounded-full" />
+            { showOption && (
+              <div className="absolute top-10 right-10 z-100 w-32 bg-white border border-gray-300 shadow-lg rounded-md py-2 gap-2">
+                <NavLink to={'/add'}  className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'> Un Article</NavLink>
+                <NavLink to={'/addQuiz'} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Un Quiz</NavLink>
+              </div>
+            )}
+        </div>
       );
     }
-    return null;  // Return null if conditions are not met
+    return null;  
   };
 
 
@@ -86,12 +104,18 @@ const Navbar = ({ link }) => {
             >
               Articles
             </NavLink>
-            {renderAddLink()}
+            
             <NavLink
               to="/quiz"
               className={`text-black font-bold text-sm ${activeLink === 'quiz' ? 'text-gray-400' : ''}`}
             >
               Quiz
+            </NavLink>
+            <NavLink
+              to="/expert"
+              className={`text-black font-bold text-sm ${activeLink === 'expert' ? 'text-gray-400' : ''}`}
+            >
+              Experts
             </NavLink>
             <NavLink
               to="/about"
@@ -103,6 +127,7 @@ const Navbar = ({ link }) => {
         </div>
         {/* Profile & Search (Visible on all screens except small) */}
         <div className="hidden md:flex flex-row items-center justify-between py-1 px-2 space-x-6">
+          {renderAddLink()}
           <div className="items-center justify-center flex flex-col">
             <img
               src={searchIcon}
@@ -125,7 +150,7 @@ const Navbar = ({ link }) => {
                 user != null ? (
                   <>
                     <button onClick={handleClick} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Profil</button>
-                    <button className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Déconnexion</button>
+                    <button onClick={handleLogout} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Déconnexion</button>
                   </>
                 ) :(
                   <button onClick={handleConnectClick} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'> Se Connecter </button>

@@ -1,13 +1,10 @@
 import {React,useState,useEffect} from 'react';
 import logo from '../uploads/logo.jpeg';
-import menu from '../uploads/menu.png' ;
-import profil from '../uploads/profile.png' ;
 import search from '../uploads/search.png'
 import axios from 'axios';
 import {useNavigate, NavLink} from 'react-router-dom'
 import SideBar from '../components/SideBar'
 import {MenuIcon, UserCircle } from 'lucide-react';
-import Chargement from '../components/Chargement';
 
 const Search = () => {
   const [user, setUser] = useState(null);
@@ -30,7 +27,7 @@ const Search = () => {
 
   const handleMenuClick = () => {
     setShowMenu(!showMenu)
-  };
+  }
 
   const handleProfilClick = () => {
     setShowDiv(!showDiv) 
@@ -45,6 +42,17 @@ const Search = () => {
     setShowDiv(false)
     navigate('/login')
   }
+  const handleLogout = async () => {
+    try {
+      await axios.post('http://localhost:8000/api/logout');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('user');
+      localStorage.removeItem('user_id');
+      navigate('/login');
+    } catch (error) {
+      console.error('Error logging out', error);
+    }
+  };
 
   const fetchArticles = async () => {
     try {
@@ -141,7 +149,7 @@ const Search = () => {
                 user ? (
                   <>
                     <button onClick={handleClick} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Profil</button>
-                    <button className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Déconnexion</button>
+                    <button onClick={handleLogout} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Déconnexion</button>
                   </>
                 ) :
                   <button onClick={handleConnectClick} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Se Connecter</button>

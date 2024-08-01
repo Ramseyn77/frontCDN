@@ -137,7 +137,7 @@ const Profil = () => {
                 <label htmlFor="profil" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Profil</label>
                 <input type="file" onChange={(e) => handleChange(e)} name="profil" className="w-full block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:border-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" />
               </div>
-              <button type="submit" className={`py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-blue-500 sm:w-fit hover:bg-blue-700 focus:outline-none dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 ${Object.keys(errors).length ? 'bg-red-300 text-white' : ''}`}>{isSubmitting ? 'En cours...' : 'Mettre à jour'}</button>
+              <button type="submit" className={`py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-blue-500 sm:w-fit hover:bg-blue-700 focus:outline-none dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 transition-colors ${Object.keys(errors).length ? 'bg-red-300 text-white' : ''}`}>{isSubmitting ? 'En cours...' : 'Mettre à jour'}</button>
             </form>
           </div>
         </div>

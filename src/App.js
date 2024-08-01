@@ -14,6 +14,9 @@ import About from './pages/About';
 import Profil from './pages/Profil';
 import PageNotFound from './pages/PageNotFound';
 import VerifyEmail from './pages/VerifyEmail';
+import Experts from './pages/Experts';
+import AddQuiz from './pages/AddQuiz';
+import SuccessPage from './pages/SuccessPage';
 
 
 function App() {
@@ -27,12 +30,15 @@ function App() {
         <Route exact path='/about' element={<About/>} />
         <Route exact path='/profil' element={<Profil/>} />
         <Route exact path='/quiz' element={<Quiz/>} />
+        <Route exact path='/expert' element={<Experts/>} />
         <Route exact path='/add' element={<AddArticle/>} />
+        <Route exact path='/addQuiz' element={<AddQuiz/>} />
         <Route exact path='/articles' element={<Articles/>} />
         <Route exact path='/articles/:type/:id' element={<List/>} />
         <Route exact path='/search/:word' element={<SearchList/>} />
         <Route exact path='/articles/show/:id' element={<Article/>} />
         <Route exact path='/search' element={<Search/>} />
+        <Route exact path='/sucess' element={<SuccessPage/>} />
         <Route exact path='/notFound' element={<PageNotFound/>} />
       </Routes>
     </Router>

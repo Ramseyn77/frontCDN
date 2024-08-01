@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import PartX from '../components/PartX'
 import { useEffect } from 'react'
 import {useNavigate} from 'react-router-dom'
+import {CheckCircle} from 'lucide-react'
 import axios from 'axios'
 import ConfirmPage from '../components/ConfirmPage'
 
@@ -129,15 +130,17 @@ const AddArticle = () => {
     <div className='h-full w-screen'>
       <Navbar link={'add'} />
       <div className="flex flex-row">
-
         <div className='sm:w-[75%] w-[70%] h-auto p-4 max-h-[80vh] overflow-y-auto'>
             {
                 show ? (
                     <>
                         <ConfirmPage nom={article.nom} contenu={article.contenu} numero={article.numero} livre_id={livreId} titre_id={article.titre_id} chapitre_id={article.chapitre_id} section_id={article.section_id} />
                         <div className="w-full flex flex-row items-center justify-between px-10 mt-8">
-                            <button  onClick={(e) => handleBack(e)} className='px-3 py-2 text-sm text-white font-bold bg-gray-400 rounded-md hover:bg-gray-600'>Modifier</button>
-                            <button  onClick={(e) => handleSubmit(e)} className='px-3 py-2 text-sm text-white font-bold bg-green-400 rounded-md hover:bg-green-600'>Enrégistrer</button>
+                            <button  onClick={(e) => handleBack(e)} className='px-3 py-2 text-sm text-white font-bold bg-gray-400 rounded-md hover:bg-gray-600 transition-colors'>Modifier</button>
+                            <button  onClick={(e) => handleSubmit(e)} className='flex flex-row items-center gap-2 px-3 py-2 text-sm text-white font-bold bg-green-400 rounded-md hover:bg-green-600 transition-colors'>
+                                Enrégistrer
+                                <CheckCircle className="h-4 w-4 inline "/>
+                            </button>
 
                         </div>
                     </>
@@ -235,14 +238,13 @@ const AddArticle = () => {
                             </div>
 
                             <div className='flex flex-col items-center py-1 mt-2'>
-                                <button type="submit" onClick={(e) => handleClick(e)} className='px-3 py-2 text-sm text-white font-bold bg-blue-400 rounded-md hover:bg-[#6acde5]'>Soumettre</button>
+                                <button type="submit" onClick={(e) => handleClick(e)} className='px-3 py-2 text-sm text-white font-bold bg-blue-400 rounded-md hover:bg-[#6acde5] transition-colors'>Soumettre</button>
                             </div>
                         </form>
                     </div>
                 )
             }
         </div>
-
         <PartX title={'Récément Ajouter'} type={'redacteur'} reload={success ? true : false} />
       </div>
     </div>

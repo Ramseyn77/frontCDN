@@ -20,8 +20,7 @@ const PartX = ({title, type, reload}) => {
     if (type === 'fait') {
       fetchEvents(id)
     }
-    reinisialize()
-  },[])
+  },[reload])
 
   const reinisialize = async () => {
     if(reload) {
@@ -127,7 +126,7 @@ const PartX = ({title, type, reload}) => {
                 {
                   sortedData.length > 0 ? (
                     sortedData.map((item) => (
-                      <ArticleCard number={item.numero} name={item.nom} content={item.contenu} />
+                      <ArticleCard number={item.numero} name={item.nom} content={item.contenu} onClick={(e) => handleClick(item.id)} />
                     ))
                   ) : <div></div>
                 }
