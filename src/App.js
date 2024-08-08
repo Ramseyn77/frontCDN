@@ -17,6 +17,10 @@ import VerifyEmail from './pages/VerifyEmail';
 import Experts from './pages/Experts';
 import AddQuiz from './pages/AddQuiz';
 import SuccessPage from './pages/SuccessPage';
+import ConfirmEmail from './pages/ConfirmEmail';
+import ChangePassword from './pages/ChangePassword';
+import Tutoriels from './pages/Tutoriels';
+import AddTutoriel from './pages/AddTutoriel';
 
 
 function App() {
@@ -24,12 +28,16 @@ function App() {
     <Router>
       <Routes>
         <Route exact path='/login' element={<Login/>} />
+        <Route exact path='/mailVerify' element={<ConfirmEmail/>} />
+        <Route exact path='/changePassword' element={<ChangePassword/>} />
         <Route exact path='/register' element={<Register/>} />
         <Route exact path='/emailVerify/:id' element={<VerifyEmail/>} />
         <Route exact path='/' element={<Home/>} />
         <Route exact path='/about' element={<About/>} />
         <Route exact path='/profil' element={<Profil/>} />
         <Route exact path='/quiz' element={<Quiz/>} />
+        <Route exact path='/tutoriel' element={<Tutoriels/>} />
+        <Route exact path='/addTutoriel' element={<AddTutoriel/>} />
         <Route exact path='/expert' element={<Experts/>} />
         <Route exact path='/add' element={<AddArticle/>} />
         <Route exact path='/addQuiz' element={<AddQuiz/>} />

@@ -13,10 +13,10 @@ const Home = () => {
   }
 
   return (
-    <div className='w-screen'>
+    <div className='flex flex-col'>
       <Navbar link={'home'} />
-      <div className="w-full flex flex-col items-center justify-center mt-4 sm:mt-2 p-4 ml-20 ">
-        <div className="w-[80%] flex flex-col sm:flex-row gap-2 items-center justify-center p-4">
+      <div className="w-full flex flex-col items-center mt-4 sm:mt-2 p-4">
+        <div className="w-[80%] flex flex-col sm:flex-row items-center justify-center p-4">
           <div className="sm:w-[30%] w-full flex flex-col gap-10 items-start">
             <div className="text-5xl font-bold text-blue-400">CDN</div>
             <div className="text-sm font-semibold">Informez-vous et protégez-vous en ligne avec CDN, votre allié contre la cybercriminalité.</div>

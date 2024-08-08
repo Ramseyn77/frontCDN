@@ -12,7 +12,7 @@ const InputPassword = ({ label, onChange, name, value, placeholder, isLogin, err
         <div className='flex flex-col space-y-3 mb-2'>
         <div className='flex flex-row justify-between'>
           <label for={name} className='text-black font-semibold text-md'>{label}</label>
-          {isLogin && <NavLink to='/login' className='text-sm text-gray-400 hover:text-gray-200 '>forgot password ?</NavLink>}
+          {isLogin && <NavLink to='/mailVerify' className='text-sm text-gray-400 hover:text-gray-500 '>forgot password ?</NavLink>}
         </div>
         <div className='w-full flex flex-row justify-between items-center relative'>
           <input
@@ -21,7 +21,7 @@ const InputPassword = ({ label, onChange, name, value, placeholder, isLogin, err
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            className={`w-full h-[100%] outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3  sm:text-base md:text-sm ${error ? 'bg-red-300': ''} ${show && 'text-gray-900' }`  } 
+            className={`w-full h-[100%] outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3  sm:text-base md:text-sm ${error ? 'text-red-400 border-red-300': ''} ${show && 'text-gray-900' }`  } 
             required />
           <button
             type='button'

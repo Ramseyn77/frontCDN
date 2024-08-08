@@ -1,40 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import LogNavbar from '../components/LogNavbar'
-import { useState } from 'react'
-import { useEffect } from 'react'
-import logo from '../uploads/logo.jpeg';
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { useNavigate, useParams } from 'react-router-dom';
+import logo from '../uploads/logo.jpeg';
 
-const VerifyEmail = () => {
-  const [code, setCode] = useState(null)
-  const [error, setError] = useState('')
-  const {id} = useParams()
-  const navigate = useNavigate()
+const ConfirmEmail = () => {
+    const [email, setEmail] = useState(null)
+    const [error, setError] = useState('')
+    const navigate = useNavigate()
 
-  const handleChange = (e) => {
-    setCode(e.target.value)
-  }
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = {'code' : code}
-    console.log(data)
-    try {
-      const response = await axios.post('http://localhost:8000/api/users/emailVerify/'+id, data)
-      console.log(response)
-      navigate('/login')
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        setError('Incompatible code');
-      } else {
-        console.error(error);
-      }
+    const handleChange = (e) => {
+        setEmail(e.target.value)
     }
-  }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const data = {'email' : email}
+        try {
+            const response = await axios.post('http://localhost:8000/api/users/rememberEmail', data)
+            if (response.data.user) navigate('/changePassword')
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                setError('Email non correspondant');
+              } else {
+                console.error(error);
+            }
+        }
+    }
 
   return (
     <div className='w-full flex flex-col'>
-      <LogNavbar link={'/register'} />
+      <LogNavbar link={'/login'} />
       <div className="flex flex-col space-y-10 items-center w-full p-3 ">
         <div className="items-center justify-center flex flex-col mb-6">
           <img src={logo} alt='Logo' className='h-16 w-16 bg-transparent rounded-full' />
@@ -43,8 +39,8 @@ const VerifyEmail = () => {
           <div className='flex flex-col w-full '>
             <div className='flex flex-col justify-center items-center'>
               <div className=' sm:w-[45%] w-full flex flex-col space-y-3 mb-2'>
-                <label for='code' className='text-black font-semibold text-md'>Code de confirmation. Veillez consultez vos mails </label>
-                <input name='code' placeholder='Entrer vôtre code' onChange={ (e) => handleChange(e)} 
+                <label for='email' className='text-black font-semibold text-md'>Email</label>
+                <input name='email' placeholder='Entrer vôtre email' onChange={ (e) => handleChange(e)} 
                 className={`w-full outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3 ${error ? 'border-red-300 ' : ''}`} />
               </div>
             </div>
@@ -63,4 +59,4 @@ const VerifyEmail = () => {
   )
 }
 
-export default VerifyEmail
+export default ConfirmEmail

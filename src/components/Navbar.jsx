@@ -74,6 +74,7 @@ const Navbar = ({ link }) => {
               <div className="absolute top-10 right-10 z-100 w-32 bg-white border border-gray-300 shadow-lg rounded-md py-2 gap-2">
                 <NavLink to={'/add'}  className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'> Un Article</NavLink>
                 <NavLink to={'/addQuiz'} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Un Quiz</NavLink>
+                <NavLink to={'/addTutoriel'} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Un Tutoriel</NavLink>
               </div>
             )}
         </div>
@@ -116,6 +117,12 @@ const Navbar = ({ link }) => {
               className={`text-black font-bold text-sm ${activeLink === 'expert' ? 'text-gray-400' : ''}`}
             >
               Experts
+            </NavLink>
+            <NavLink
+              to="/tutoriel"
+              className={`text-black font-bold text-sm ${activeLink === 'tutoriel' ? 'text-gray-400' : ''}`}
+            >
+              Tutoriels
             </NavLink>
             <NavLink
               to="/about"
