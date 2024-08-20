@@ -1,7 +1,7 @@
 import {React, useState, useEffect} from 'react'
 import {NavLink, useNavigate} from 'react-router-dom'
 import logo from '../uploads/logo.jpeg'
-import {UserCircle, HomeIcon, NotebookIcon, FolderKanban, FileQuestionIcon, SearchIcon, PlusCircleIcon, User} from 'lucide-react'
+import {UserCircle, HomeIcon, NotebookIcon,Book , FolderKanban, FileQuestionIcon, SearchIcon, PlusCircleIcon, User} from 'lucide-react'
 import axios from 'axios'
 import Chargement from './Chargement'
 
@@ -52,6 +52,7 @@ const SideBar = ({visible}) => {
               <div className="absolute top-10 right-10 z-100 w-32 bg-white border border-gray-300 shadow-lg rounded-md py-2 gap-2">
                 <NavLink to={'/add'}  className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'> Un Article</NavLink>
                 <NavLink to={'/addQuiz'} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Un Quiz</NavLink>
+                <NavLink to={'/addTutoriel'} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Un Tutoriel</NavLink>
               </div>
             )}
         </div>
@@ -105,6 +106,14 @@ const SideBar = ({visible}) => {
           >
             <User className='h-4 w-4 inline font-foreground'/>
             <div className="">Experts</div>
+          </NavLink>
+          <NavLink
+            to="/tutoriel"
+            className={`flex gap-2 items-start justify-center text-blue-500 font-bold text-sm hover:text-blue-400 transition-color `}
+            onClick={handleMenuClick}
+          >
+            <Book className='h-4 w-4 inline font-foreground'/>
+            <div className="">Tutoriels</div>
           </NavLink>
           <NavLink
             to="/search"

@@ -6,6 +6,7 @@ import {useNavigate} from 'react-router-dom'
 import {CheckCircle} from 'lucide-react'
 import axios from 'axios'
 import ConfirmPage from '../components/ConfirmPage'
+import {X} from 'lucide-react'
 
 const AddArticle = () => {
     const [success , setSucess] = useState(false)
@@ -127,8 +128,8 @@ const AddArticle = () => {
     }
 
   return (
-    <div className='h-full w-screen'>
-      <Navbar link={'add'} />
+    <div className='h-full overflow-hidden'>
+      <Navbar link={'articles'} />
       <div className="flex flex-row">
         <div className='sm:w-[75%] w-[70%] h-auto p-4 max-h-[80vh] overflow-y-auto'>
             {
@@ -149,17 +150,17 @@ const AddArticle = () => {
                     <div className='flex flex-col space-y-2 px-6 py-2 items-center justify-center w-full'>
                         {
                             success && (
-                                <div className='flex flex-col sm:flex-row space-y-1 sm:space-x-1 items-center justify-center mb-2 w-full py-3 px-3 bg-green-300 rounded-sm'>
+                                <div className='flex flex-col sm:flex-row space-y-1 items-center justify-center mb-2 w-full py-3 px-3 bg-green-300 rounded-sm'>
                                     <div className="text-sm font-semibold ">{success}</div>
-                                    <button onClick={handleSetSuccess} className='text-sm underline hover:text-gray-600'>clicquez ici pour faire disparaitre la baniaire</button>
+                                    <X onClick={handleSetSuccess} className='text-sm hover:cursor-pointer text-gray-700' />
                                 </div>
                             ) 
                         }
                         {
                             error && (
-                                <div className='flex flex-col sm:flex-row space-y-1 sm:space-x-1 items-center justify-center mb-2 w-full py-3 px-3 bg-red-300 rounded-sm'>
+                                <div className='flex flex-col sm:flex-row space-y-1 items-center justify-between mb-2 w-full py-3 px-3 bg-red-300 rounded-sm'>
                                     <div className="text-sm font-semibold">{error}</div>
-                                    <button onClick={handleSetError} className='text-sm underline hover:text-gray-600'>clicquez ici pour faire disparaitre la baniaire</button>
+                                    <X onClick={handleSetError} className='text-sm hover:cursor-pointer  text-gray-700' />
                                 </div>
                             ) 
                         }

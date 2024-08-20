@@ -54,10 +54,6 @@ const Login = () => {
     }
   }
 
-  const handleLoginGoogle = async () => {
-    alert('Logged with google');
-  }
-
   return (
     <div className='flex flex-col space-y-10 h-full w-full'>
       <LogNavbar link={'/login'}/>
@@ -78,16 +74,6 @@ const Login = () => {
               onClick={(e) => handleLogin(e)}
             >
               Connecter vous 
-            </button>
-
-            <button type='button' 
-              className='bg-blue-200 flex flex-row justify-center space-x-4 text-sm font-bold text-blue-500 w-full rounded-lg py-2 hover:bg-blue-300 mb-4'
-              onClick={handleLoginGoogle}
-            >
-              <div>
-                <img src={google} alt="Goole logo" />
-              </div>
-              <div className='flex flex-col items-center justify-center mt-1'>  Continuer avec google   </div>
             </button>
 
             <div className="flex flex-row space-x-3 text-gray-400  text-sm items-center justify-center">

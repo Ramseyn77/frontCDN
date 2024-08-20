@@ -26,7 +26,7 @@ const Home = () => {
             </button>
           </div>
           <div className="sm:w-[75%] w-full flex flex-col items-center">
-            <img src={design} alt='design' className='rounded-xl w-[450px] h-[450px]' />
+            <img src={design} alt='design' className='rounded-xl w-full h-full sm:w-[450px] sm:h-[450px]' />
           </div>
         </div>
       </div>

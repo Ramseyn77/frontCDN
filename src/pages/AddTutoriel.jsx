@@ -53,7 +53,7 @@ const AddTutoriel = () => {
             <div className="flex flex-col w-full justify-center items-center mt-4">
               <button type="submit" 
                 onClick = {(e) => handleSubmit(e)}
-                className='bg-blue-500 text-md font-bold text-white w-[35%] sm:w-[15%] rounded-lg py-2 px-3 hover:bg-blue-400 mb-4'               
+                className='sm:w-[30%] w-full bg-blue-500 text-md font-bold text-white w-[35%] sm:w-[15%] rounded-lg py-2 px-3 hover:bg-blue-400 mb-4'               
               >
                 Terminé
               </button>

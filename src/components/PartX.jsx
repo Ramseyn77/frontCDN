@@ -90,7 +90,7 @@ const PartX = ({title, type, reload}) => {
   }
 
   return (
-    <div className='w-[30%] sm:w-[25%] md:h-[1200px] h-[582px]  py-0 px-2 bg-gray-300'>
+    <div className='w-[30%] sm:w-[25%] h-[1200px] sm:h-[582px] overflow-y-hidden py-0 px-2 bg-gray-300'>
         <div className="w-full text-black h-[5%] text-md sm:text-2xl md:text-lg font-bold flex flex-col items-center justify-center mb-3 top-0 bg-gray-300 ">
             {title}
         </div>
@@ -105,7 +105,7 @@ const PartX = ({title, type, reload}) => {
 
             {
               type === 'article' ? (
-              <div className="space-y-2">
+              <div className="space-y-2 overflow-y-auto h-[78vh]">
                 {
                   sortedData.length > 0 ? (
                     sortedData.map((item,i) => (
@@ -122,7 +122,7 @@ const PartX = ({title, type, reload}) => {
 
             {
               type === 'redacteur' ? (
-              <div className="space-y-2 overflow-y-auto h-[78vh] md:[85vh]">
+              <div className="space-y-2 overflow-y-auto h-[78vh]">
                 {
                   sortedData.length > 0 ? (
                     sortedData.map((item) => (
@@ -137,7 +137,7 @@ const PartX = ({title, type, reload}) => {
 
             {
               type === 'fait' ? (
-              <div className="space-y-2 overflow-y-auto h-[78vh] md:[85vh]">
+              <div className="space-y-2 overflow-y-auto h-[78vh]">
                 {
                   events.length > 0 ? (
                     events.map((item) => (

@@ -33,9 +33,6 @@ const Register = () => {
     setUser({ ...user, [name]: value });
   }
 
-  const handleRegisterGoogle = async () => {
-    alert('registred with google')
-  }
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -83,16 +80,6 @@ const Register = () => {
               onClick={(e) => handleRegister(e)}
             >
               S'enregistrer
-            </button>
-
-            <button type='button' 
-              className='bg-blue-200 flex flex-row justify-center space-x-4 text-sm font-bold text-blue-500 w-full rounded-lg py-2 hover:bg-blue-300 mb-4'
-              onClick={handleRegisterGoogle}
-            >
-              <div>
-                <img src={google} alt="Goole logo" />
-              </div>
-              <div className='flex flex-col items-center justify-center mt-1'>  Continuer avec google   </div>
             </button>
 
             <div className="flex flex-row space-x-3 text-gray-400  text-sm items-center justify-center">
