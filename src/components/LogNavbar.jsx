@@ -1,15 +1,19 @@
 import {React,useState} from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../uploads/logo.jpeg';
 
 const LogNavbar = ({link}) => {
 
   const [activeLink, setActiveLink] = useState(link); 
+  const navigate = useNavigate();
+  const  handleclick  = () => {
+    navigate('/')
+  }
 
   return (
     <div className='flex flex-row items-center justify-between p-4 w-full h-[12%]'>
       <div className="items-center justify-center flex flex-col">
-        <img src={logo} alt='Logo' className='h-12 w-12 bg-transparent rounded-full' />
+        <img src={logo} alt='Logo' className='h-12 w-12 bg-transparent rounded-full' onClick={handleclick} />
       </div>
       <div className="flex flex-row items-center justify-between py-1 px-2 space-x-6">
         <NavLink
