@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
 import { ChevronUp, ChevronDown } from 'lucide-react';
+import {fetchData} from '../api'
 
 const Tutoriels = () => {
   const [tutoriels, setTutoriels] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]); 
   const [word, setWord] = useState(null);
   const [showDetails, setShowDetails] = useState([]); 
+  
 
   useEffect(() => {
     fetchRessources();
@@ -26,9 +28,9 @@ const Tutoriels = () => {
 
   const fetchRessources = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/tutoriels');
-      setTutoriels(response.data.tutoriels);
-      setFilteredResults(response.data.tutoriels); 
+      const response = await fetchData('/api/tutoriels');
+      setTutoriels(response.tutoriels);
+      setFilteredResults(response.tutoriels); 
     } catch (error) {
       console.log('Error');
     }
@@ -57,7 +59,7 @@ const Tutoriels = () => {
             value={word}
             onChange={handleChange}
             placeholder="Recherche..."
-            className="w-full sm:w-[90vh] flex-grow outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3 sm:text-base md:text-sm"
+            className="w-full sm:w-[90vh] lg:w-[90vh] md:w-[70vh] flex-grow outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-2 py-3 sm:text-base md:text-sm"
           />
         </div>
         {filteredResults.length > 0 ? (
@@ -66,7 +68,7 @@ const Tutoriels = () => {
               <div key={i} className='flex flex-col mb-3'>
                 <button
                   onClick={() => handleShow(i)}
-                  className={`flex flex-row items-center justify-between gap-6 rounded-lg w-full py-3 px-4 bg-gray-200 `}
+                  className={`flex sm:w-[90vh] lg:w-[90vh] md:w-[70vh] flex-row items-center justify-between rounded-lg w-full py-3 px-4 bg-gray-100 `}
                 >
                   {item.titre}
                   {showDetails[i] ? ( 
@@ -76,7 +78,7 @@ const Tutoriels = () => {
                   )}
                 </button>
                 {showDetails[i] && ( 
-                  <div className="w-full sm:w-[90vh] flex flex-col items-center justify-center py-2 px-4 ">
+                  <div className="w-full sm:w-[90vh] lg:w-[90vh] md:w-[70vh] flex flex-col items-center justify-center py-2 px-4 ">
                     {item.contenu}
                   </div>
                 )}

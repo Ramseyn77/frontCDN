@@ -4,7 +4,7 @@ import PartX from '../components/PartX'
 import { useEffect } from 'react'
 import {useNavigate} from 'react-router-dom'
 import {CheckCircle} from 'lucide-react'
-import axios from 'axios'
+import {fetchData, postData} from '../api'
 import ConfirmPage from '../components/ConfirmPage'
 import {X} from 'lucide-react'
 
@@ -36,8 +36,8 @@ const AddArticle = () => {
         const accessToken = localStorage.getItem('accessToken');
         const id = localStorage.getItem('user_id');
         try {
-            const response = await axios.get('http://localhost:8000/api/users/' + id);
-            const fetchedUser = response.data.user;
+            const response = await fetchData('/api/users/' + id);
+            const fetchedUser = response.user;
             setUser(fetchedUser);
             if (!accessToken || fetchedUser.status !== 2) {
                 navigate('/notFound');
@@ -53,8 +53,8 @@ const AddArticle = () => {
 
     const fetchLivres = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/api/livres')
-            setLivres(response.data.livres) 
+            const response = await fetchData('/api/livres')
+            setLivres(response.livres) 
         } catch (error) {
             console.error('Error fetching titles:', error);
         }
@@ -63,9 +63,9 @@ const AddArticle = () => {
         try {
             const livreId = parseInt(e.target.value)
             setlivreId(livreId) 
-            const result = await axios.get(`http://localhost:8000/api/livres/${livreId}/titres`)
-            setTitres(result.data.titres)
-            if(result.data.titres.length=== 0){
+            const result = await fetchData(`/api/livres/${livreId}/titres`)
+            setTitres(result.titres)
+            if(result.titres.length=== 0){
                 setChapitres([])
                 setSections([])
             }
@@ -77,8 +77,8 @@ const AddArticle = () => {
         try {
             handleChange(e)
             const titreId = parseInt(e.target.value)
-            const result = await axios.get(`http://localhost:8000/api/titres/${titreId}/chapitres`)
-            setChapitres(result.data.chapitres)
+            const result = await fetchData(`/api/titres/${titreId}/chapitres`)
+            setChapitres(result.chapitres)
         } catch (error) {
             console.error('Problem :', error) 
         }
@@ -87,8 +87,8 @@ const AddArticle = () => {
         try {
             handleChange(e)
             const chapitreId = parseInt(e.target.value)
-            const result = await axios.get(`http://localhost:8000/api/chapitres/${chapitreId}/sections`)
-            setSections(result.data.sections)
+            const result = await fetchData(`/api/chapitres/${chapitreId}/sections`)
+            setSections(result.sections)
         } catch (error) {
             console.error('Problem :', error) 
         }
@@ -116,8 +116,7 @@ const AddArticle = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const response = await axios.post('http://localhost:8000/api/articles', article);
-            console.log(response);
+            const response = await postData('/api/articles', article); 
             setSucess('L\' article '+article.numero +' a été bien enrégistrer !')
             setShow(!show)
         } catch (error) {
@@ -131,7 +130,7 @@ const AddArticle = () => {
     <div className='h-full overflow-hidden'>
       <Navbar link={'articles'} />
       <div className="flex flex-row">
-        <div className='sm:w-[75%] w-[70%] h-auto p-4 max-h-[80vh] overflow-y-auto'>
+        <div className='lg:w-[75%] w-[70%] md:w-[80%] h-auto p-4 max-h-[80vh] overflow-y-auto'>
             {
                 show ? (
                     <>

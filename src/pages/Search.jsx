@@ -1,10 +1,9 @@
 import {React,useState,useEffect} from 'react';
 import logo from '../uploads/logo.jpeg';
-import search from '../uploads/search.png'
-import axios from 'axios';
-import {useNavigate, NavLink} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import SideBar from '../components/SideBar'
-import {MenuIcon, UserCircle } from 'lucide-react';
+import {MenuIcon, UserCircle, SearchIcon } from 'lucide-react';
+import {fetchData, postData} from '../api'
 
 const Search = () => {
   const [user, setUser] = useState(null);
@@ -44,7 +43,7 @@ const Search = () => {
   }
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:8000/api/logout');
+      await postData('/api/logout');
       localStorage.removeItem('accessToken');
       localStorage.removeItem('user');
       localStorage.removeItem('user_id');
@@ -56,8 +55,8 @@ const Search = () => {
 
   const fetchArticles = async () => {
     try {
-      const log = await axios.get('http://localhost:8000/api/articles')
-      setArticles(log.data.articles)
+      const log = await fetchData('/api/articles')
+      setArticles(log.articles)
     } catch (error) {
       console.log('Bad request')
     }
@@ -65,8 +64,8 @@ const Search = () => {
 
   const fetchUser = async (id) => {
     try {
-      const response = await axios.get('http://localhost:8000/api/users/' + id);
-      setUser(response.data.user);
+      const response = await fetchData('/api/users/' + id);
+      setUser(response.user);
     } catch (error) {
       console.error('Message', error);
     }
@@ -109,8 +108,7 @@ const Search = () => {
         user_id : user_id,
         mot : item
       }
-      const response = await axios.post('http://localhost:8000/api/recherches', dataSend)
-      console.log(response.data.message)
+      const response = await postData('/api/recherches', dataSend)
       navigate('/search/'+item)
     } catch (error) {
       console.error('message',error)
@@ -138,8 +136,8 @@ const Search = () => {
             <div className="items-center justify-center flex flex-col">
               {
                 user && user.profil ?(
-                  <img src= {logo} alt="Logo" onClick={handleProfilClick} className="h-6 w-6 bg-transparent hover:cursor-pointer rounded-full" />
-                ) : (
+                  <img src= {'http://localhost:8000/storage/'+user.profil} alt="Logo" onClick={handleProfilClick} className="h-6 w-6 bg-transparent hover:cursor-pointer rounded-full" />
+                  ) : (
                   <UserCircle onClick={handleProfilClick} className="h-6 w-6 bg-transparent hover:cursor-pointer rounded-full" />
                 )
               }
@@ -148,7 +146,7 @@ const Search = () => {
                 {
                 user ? (
                   <>
-                    <button onClick={handleClick} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Profil</button>
+                    <button onClick={handlePClick} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Profil</button>
                     <button onClick={handleLogout} className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'>Déconnexion</button>
                   </>
                 ) :
@@ -186,7 +184,7 @@ const Search = () => {
                   onClick={(e) => handleClick(item)}
                   className="w-[100%] flex flex-row items-center space-x-6 mb-2 text-md text-black font-semibold py-2 px-3 hover:bg-gray-200 hover:text-gray-800"
                 >
-                  <img src={search} alt="search-icon" className="h-6 w-6 bg-transparent rounded-full" />
+                  <SearchIcon className="h-6 w-6 bg-transparent text-gray-400 rounded-full" />
                   <div className="">{item}</div>
                 </button>
               ))

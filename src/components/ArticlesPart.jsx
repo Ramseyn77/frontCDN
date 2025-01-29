@@ -2,7 +2,7 @@ import {React,useEffect, useState} from 'react'
 import CardH from './CardH'
 import CardT from './CardT'
 import CardC from './CardC'
-import axios from 'axios'
+import {fetchData} from '../api'
 import { useNavigate } from 'react-router-dom'
 
 const ArticlesPart = () => {
@@ -19,8 +19,8 @@ const ArticlesPart = () => {
 
   const fetchLivres = async () => {
     try {
-      const result = await axios.get('http://localhost:8000/api/livres');
-      setLivres(result.data.livres); 
+      const result = await fetchData('/api/livres');
+      setLivres(result.livres); 
     } catch (error) {
       console.error('Error fetching books:', error);
     }
@@ -28,8 +28,8 @@ const ArticlesPart = () => {
 
   const fetchTitres = async () => {
     try {
-      const result = await axios.get('http://localhost:8000/api/titres');
-      setTitres(result.data.titres);
+      const result = await fetchData('/api/titres');
+      setTitres(result.titres);
     } catch (error) {
       console.error('Error fetching titles:', error);
     }
@@ -37,8 +37,8 @@ const ArticlesPart = () => {
 
   const fetchChapitres = async () => {
     try {
-      const log = await axios.get('http://localhost:8000/api/chapitres');
-      setChapitres(log.data.chapitres);
+      const log = await fetchData('/api/chapitres');
+      setChapitres(log.chapitres);
     } catch (error) {
       console.error('Error fetching chapters:', error);
     }
@@ -62,8 +62,8 @@ const ArticlesPart = () => {
   const handleCardClick = async (livreId) => {
     try {
       setActivLink('titre')
-      const result = await axios.get(`http://localhost:8000/api/livres/${livreId}/titres`)
-      setTitres(result.data.titres)
+      const result = await fetchData(`/api/livres/${livreId}/titres`)
+      setTitres(result.titres)
     } catch (error) {
       console.error('Error for titles :', error)
     }
@@ -71,13 +71,13 @@ const ArticlesPart = () => {
 
   const handleCardClickT = async (titreId) => {
       try {
-        const result = await axios.get(`http://localhost:8000/api/titres/${titreId}/chapitres`)
-        const chapitres = result.data.chapitres
+        const result = await fetchData(`/api/titres/${titreId}/chapitres`)
+        const chapitres = result.chapitres
         if (chapitres.length === 0) {
           navigate('/articles/titre/'+titreId)
         }
         setActivLink('chapitre')
-        setChapitres(result.data.chapitres)
+        setChapitres(result.chapitres)
       } catch (error) {
         console.error('Problem with chapiter',error)
       }
@@ -85,8 +85,8 @@ const ArticlesPart = () => {
 
   const handleCardClickC = async (chapitreId) => {
     try {
-      const result = await axios.get(`http://localhost:8000/api/chapitres/${chapitreId}/articles`)
-        navigate('/articles/chapitre/'+chapitreId)
+      const result = await fetchData(`/api/chapitres/${chapitreId}/articles`)
+      navigate('/articles/chapitre/'+chapitreId)
     } catch (error) {
       console.error('Problem with chapiter',error)
     }
@@ -119,36 +119,36 @@ const ArticlesPart = () => {
   }
 
   return (
-    <div className='sm:w-[75%] w-[70%] h-auto p-4'>
+    <div className='sm:w-[75%] w-[70%] h-auto md:h-[100%] p-4 border-r-2 border-gray-300 '>
       <div className="flex flex-row items-center justify-between p-2 px-2 sm:px-6 mb-2">
         <button
         type="button"
         onClick={handleClickL}
-        className={`" text-sm sm:text-md border border-black py-1 px-2 sm:px-6 rounded-sm items-center justify-center ${activLink == 'livre' ? ' items-center justify-center bg-gray-400 py-1 text-white font-semibold px-6 rounded-sm border-none' : ''} font-semibold rounded-sm"`}
+        className={`" text-sm sm:text-md py-1 px-2 sm:px-6  items-center justify-center ${activLink === 'livre' ? ' items-center justify-center bg-gray-400 py-1 text-white font-semibold px-2 sm:px-6 rounded-md border-none' : ''} font-semibold rounded-sm"`}
         >
             Livres
         </button>
 
         <button type="button"
         onClick={handleClickT}
-        className={`" text-sm sm:text-md border border-black py-1 px-2 sm:px-6  rounded-sm items-center justify-center ${activLink == 'titre' ? ' items-center justify-center bg-gray-400 py-1 text-white font-semibold px-6 rounded-sm border-none' : ''} font-semibold rounded-sm"`}
+        className={`" text-sm sm:text-md  py-1 px-2 sm:px-6 items-center justify-center ${activLink === 'titre' ? ' items-center justify-center bg-gray-400 py-1 text-white font-semibold px-2 sm:px-6  rounded-md border-none' : ''} font-semibold rounded-sm"`}
         >
             Titres
         </button>
         <button type="button"
         onClick={handleClickC}
-        className={`" text-sm sm:text-md border border-black py-1 px-2 sm:px-6  rounded-sm items-center justify-center ${activLink == 'chapitre' ? ' items-center justify-center bg-gray-400 py-1 text-white font-semibold px-6 rounded-sm border-none' : ''} font-semibold rounded-sm "`}
+        className={`" text-sm sm:text-md  py-1 px-2 sm:px-6  items-center justify-center ${activLink === 'chapitre' ? ' items-center justify-center bg-gray-400 py-1 text-white font-semibold px-2 sm:px-6 rounded-md border-none' : ''} font-semibold rounded-sm "`}
         >
             Chapitres
         </button>
       </div>
       <div className='w-full flex flex-col items-center'>
-      { activLink == 'titre' || activLink == 'chapitre' ?
+      { activLink === 'titre' || activLink === 'chapitre' ?
             (<input
               name="search"
               value={value}
               onChange={(e) => search(e)}
-              placeholder={`${activLink == 'titre' ? "Rechercher un titre..." : "Rechercher un chapitre..."} `}
+              placeholder={`${activLink === 'titre' ? "Rechercher un titre..." : "Rechercher un chapitre..."} `}
               className="w-[80%] sm:w-[60%] flex-grow outline-none border border-2 border-gray-300 rounded-lg text-gray-300 text-sm focus:text-gray-900 focus:border-blue-300 px-3 py-2 sm:text-base md:text-sm"
             />
             ) : <div></div>
@@ -156,8 +156,8 @@ const ArticlesPart = () => {
       </div>
 
       <div className="w-full flex flex-col space-y-4 px-6 py-3 items-center justify-center mt-6 h-auto">
-          <div className='w-full flex flex-col items-center overflow-y-auto md:max-h-[70vh] max-h-[60vh]'>
-            { activLink == 'livre' &&
+          <div className='w-full flex flex-col items-center overflow-y-auto max-h-[60vh] lg:max-h-[70vh] md:max-h-[80vh]'>
+            { activLink === 'livre' &&
               ( 
                 livres.map((item, i) => {
                   return (
@@ -167,7 +167,7 @@ const ArticlesPart = () => {
               )
             }
 
-            { activLink == 'titre' && 
+            { activLink === 'titre' && 
               ( 
                 titres.length > 0 ? (
                   titres.map((item, i) => {
@@ -181,7 +181,7 @@ const ArticlesPart = () => {
               )
             }
 
-            { activLink == 'chapitre' && 
+            { activLink === 'chapitre' && 
               ( 
                 chapitres.map((item, i) => {
                   return  (

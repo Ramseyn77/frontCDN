@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from '../components/Navbar'
-import axios from 'axios'
+import Navbar from '../components/Navbar' 
+import {fetchData, postData} from '../api'
 import { ArrowRight, CheckCircle, X } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
@@ -50,8 +50,8 @@ const AddQuiz = () => {
         const accessToken = localStorage.getItem('accessToken');
         const id = localStorage.getItem('user_id');
         try {
-            const response = await axios.get('http://localhost:8000/api/users/' + id);
-            const fetchedUser = response.data.user;
+            const response = await fetchData('/api/users/' + id);
+            const fetchedUser = response.user;
             setUser(fetchedUser);
             if (!accessToken || fetchedUser.status !== 2) {
                 navigate('/notFound');
@@ -68,8 +68,8 @@ const AddQuiz = () => {
     }, [])
     const fetchArticles = async () => {
         try{
-            const results = await axios.get('http://localhost:8000/api/articles') 
-            setArticles(results.data.articles)
+            const results = await fetchData('/api/articles') 
+            setArticles(results.articles)
         }catch(error){
             console.error('Something went wrp,g ', error)
         }
@@ -109,17 +109,17 @@ const AddQuiz = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const questionResponse = await axios.post('http://localhost:8000/api/questions', question);
+          const questionResponse = await postData('/api/questions', question);
           const questionId = questionResponse.data.question.id
           const reponsesWithQuestionId = reponses.map(reponse => ({ ...reponse, question_id: questionId }))
           
           console.log(reponsesWithQuestionId)          
             if(question.status == 1) {
                    reponsesWithQuestionId[0].status = 1
-                const result = await axios.post('http://localhost:8000/api/reponses', reponsesWithQuestionId[0])
+                const result = await postData('/api/reponses', reponsesWithQuestionId[0])
             }else {
                 reponsesWithQuestionId.map(async (reponse) => {
-                    const resuts = await axios.post('http://localhost:8000/api/reponses', reponse)
+                    const resuts = await postData('/api/reponses', reponse)
                 })
             }
           navigate('/sucess')

@@ -6,7 +6,7 @@ const CardH = ({number,name,key, onClick}) => {
             <div className=" w-[100%] h-[15%] py-2 sm:h-[92px] sm:w-[15%] bg-[#6acde5] items-center rounded-sm justify-center flex text-sm font-bold text-white sm:border-r-2 sm:border-black ">
               {"Liv."+ (number)}
             </div>
-            <div className="w-full h-[92px] py-1 px-3 font-semibold flex flex-col space-y-6 justify-center items-center text-sm">
+            <div className="w-full h-[92px] py-1 px-3 font-semibold flex flex-col space-y-6 justify-center items-center lg:text-sm sm:text-xs">
               {name}
             </div>
     </button>

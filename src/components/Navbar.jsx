@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
-import axios from 'axios';
+import {fetchData, postData} from '../api'
+import axios from 'axios'
 import logo from '../uploads/logo.jpeg';
-import searchIcon from '../uploads/search-black.png';
+import {SearchIcon} from 'lucide-react'
 import SideBar from '../components/SideBar';
 import {UserCircle, MenuIcon, PlusCircleIcon} from 'lucide-react'
-import Chargement from './Chargement';
 
 const Navbar = ({ link }) => {
   const navigate = useNavigate();
@@ -47,15 +47,15 @@ const Navbar = ({ link }) => {
 
   const fetchUser = async (id) => {
     try {
-      const response = await axios.get('http://localhost:8000/api/users/' + id);
-      setUser(response.data.user);
+      const response = await fetchData('/api/users/' + id);
+      setUser(response.user);
     } catch (error) {
       console.error('Message', error);
     }
   };
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:8000/api/logout');
+      await postData('/api/logout');
       localStorage.removeItem('accessToken');
       localStorage.removeItem('user');
       localStorage.removeItem('user_id');
@@ -69,7 +69,7 @@ const Navbar = ({ link }) => {
     if (user && user.status === 2) {
       return (
         <div className="items-center justify-center flex flex-col relative group">
-          <PlusCircleIcon onClick={handleOptionClick} className="h-6 w-6 bg-transparent hover:cursor-pointer rounded-full" />
+          <PlusCircleIcon onClick={handleOptionClick} className={`h-6 w-6 hover:cursor-pointer rounded-full text-blue-400 `} />
             { showOption && (
               <div className="absolute top-10 right-10 z-100 w-32 bg-white border border-gray-300 shadow-lg rounded-md py-2 gap-2">
                 <NavLink to={'/add'}  className='text-sm font-semibold flex flex-col justify-center items-center hover:bg-gray-200 w-full px-3 py-2'> Un Article</NavLink>
@@ -92,7 +92,7 @@ const Navbar = ({ link }) => {
         </div>
         {/* Navigation Links */}
         <div className="hidden md:flex flex-row justify-center items w-[80%]">
-          <div className="flex flex-row items-center justify-between py-1 px-2 space-x-16">
+          <div className="flex flex-row items-center justify-between py-1 px-2 lg:space-x-16 md:space-x-8">
             <NavLink
               to="/"
               className={`text-black font-bold text-sm ${activeLink === 'home' ? 'text-gray-400' : ''}`}
@@ -136,12 +136,9 @@ const Navbar = ({ link }) => {
         <div className="hidden md:flex flex-row items-center justify-between py-1 px-2 space-x-6">
           {renderAddLink()}
           <div className="items-center justify-center flex flex-col">
-            <img
-              src={searchIcon}
-              alt="profile"
-              onClick={() => navigate('/search')}
-              className="h-6 w-6 bg-transparent rounded-full hover:cursor-pointer"
-            />
+            <NavLink to={'/search'}>
+              <SearchIcon className='h-6 w-6 bg-transparent hover:cursor-pointer' />
+            </NavLink>
           </div>
           <div className="items-center justify-center flex flex-col relative group">
             {

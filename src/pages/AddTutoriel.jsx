@@ -1,8 +1,8 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import InputForm from '../components/InputForm'
 import Navbar from '../components/Navbar'
+import {postData} from '../api'
 
 const AddTutoriel = () => {
     const [tutoriel, setTutoriel] = useState({
@@ -20,7 +20,7 @@ const AddTutoriel = () => {
     const handleSubmit = async (e) => {
         e.preventDefault() 
         try {
-            const response = await axios.post('http://localhost:8000/api/tutoriels', tutoriel)
+            const response = await postData('/api/tutoriels', tutoriel)
             if (response.data.tutoriel) navigate('/sucess')
         } catch (error) {
             if (error.response && error.response.status === 422) {
@@ -34,6 +34,9 @@ const AddTutoriel = () => {
     <div className='flex flex-col'>
       <Navbar link={'tutoriel'}/>
       <div className="flex flex-col space-y-10 items-center w-full p-3 ">
+        <div className='w-full flex justify-center items-center text-2xl font-bold'>
+            Ajouter un Tutoriel
+        </div>
         <form method='post' className="flex flex-col space-y-6 justify-center w-[50%] mt-6">
             { errorMessage && (
                 <div className='flex flex-col items-center justify-center py-2 w-full bg-red-300 text-white font-semibold rounded-md mb-2'>

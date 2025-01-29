@@ -10,7 +10,7 @@ const CardC = ({key,number,name,onClick}) => {
               {"Chap."+ (number)}
             </div>
             <div 
-            className="w-full h-[92px] py-1 px-3 font-semibold flex flex-col space-y-6 justify-center items-center text-sm">
+            className="w-full h-[92px] py-1 px-3 font-semibold flex flex-col space-y-6 justify-center items-center lg:text-sm sm:text-xs">
               {name}
             </div>
     </button>

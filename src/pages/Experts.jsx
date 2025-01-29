@@ -2,7 +2,7 @@ import {React, useState, useEffect} from 'react'
 import Navbar from '../components/Navbar'
 import UserCard from '../components/UserCard'
 import Chargement from '../components/Chargement'
-import axios from 'axios'
+import {fetchData} from '../api'
 
 const Experts = () => {
   const [experts, setExperts] = useState([])
@@ -13,8 +13,8 @@ const Experts = () => {
 
   const fetchExperts = async () => {
     try{
-      const response = await axios.get('http://localhost:8000/api/experts')
-      setExperts(response.data.experts)
+      const response = await fetchData('/api/experts')
+      setExperts(response.experts)
     }catch(error) {
       console.error('Message', error)
     }

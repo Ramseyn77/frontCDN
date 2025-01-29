@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, NavLink, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
+import {fetchData, postData} from '../api'
 
 const SearchList = () => {
   const { word } = useParams();
@@ -12,8 +13,8 @@ const SearchList = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/articles');
-        setArticles(response.data.articles);
+        const response = await fetchData('/api/articles');
+        setArticles(response.articles);
       } catch (error) {
         console.error('Error fetching articles:', error);
       }
@@ -46,8 +47,7 @@ const SearchList = () => {
           user_id : user_id,
           article_id : id
         }
-        const response = await axios.post('http://localhost:8000/api/consultations', dataSend)
-        console.log(response.data.message)
+        const response = await postData('/api/consultations', dataSend)
       }
       navigate('/articles/show/'+id)
     } catch (error) {
@@ -64,8 +64,8 @@ const SearchList = () => {
             {results.map((item, i) => (
               <>
                 <div key={i} className="sm:w-[50%] w-full md:w-[70%] mx-auto flex flex-col items-center justify-center space-x-6 mb-3 py-2 px-3 rounded-md">
-                  <div className="flex flex-row items-center w-full space-x-3">
-                    <button type="button" onClick={(e) => handleClick(item.id)} className="text-blue-500 font-semibold text-sm sm:text-md hover:underline hover:text-blue-400">
+                  <div className="flex flex-row items-center w-full space-x-3 px-6 mb-1 ">
+                    <button type="button" onClick={(e) => handleClick(item.id)} className="text-blue-400 font-semibold text-sm sm:text-md hover:underline hover:text-blue-400">
                       {`Articles ${item.numero} :`}
                     </button>
                     <div className="text-sm sm:text-md font-semibold">{item.nom}</div>

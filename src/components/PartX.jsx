@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import ArticleCard from './ArticleCard'
-import axios from 'axios'
+import {fetchData} from '../api'
 import EventCard from './EventCard'
 import { useParams, useNavigate } from 'react-router-dom'
 
@@ -20,27 +20,22 @@ const PartX = ({title, type, reload}) => {
     if (type === 'fait') {
       fetchEvents(id)
     }
-  },[reload])
+  },[])
 
-  const reinisialize = async () => {
-    if(reload) {
-      if(type === 'redacteur'){
-        fetchArticles()
-      }
-      if (type === 'article') {
-        fetchRessources()
-      }
-      if (type === 'fait') {
-        fetchEvents(id)
-      }
+  if(reload) {
+    if(type === 'redacteur'){
+      fetchArticles()
+    }
+    if (type === 'fait') {
+      fetchEvents(id)
     }
   }
+ 
 
   const fetchEvents = async (id) =>{
     try {
-      const response = await axios.get('http://localhost:8000/api/articles/events/'+id)
-      console.log(response.data.events)
-      setEvents(response.data.events)
+      const response = await fetchData('/api/articles/events/'+id)
+      setEvents(response.events)
     } catch (error) {
       console.error('Error Message', error)
     }
@@ -48,9 +43,8 @@ const PartX = ({title, type, reload}) => {
 
   const fetchArticles = async () => {
     try {   
-        const results = await axios.get(`http://localhost:8000/api/articles`)
-        setArticles(results.data.articles)
-        console.log(articles)
+        const results = await fetchData(`/api/articles`)
+        setArticles(results.articles)
     } catch (error) {
       console.error('Error with articles:', error)
     }
@@ -59,12 +53,18 @@ const PartX = ({title, type, reload}) => {
   const fetchRessources = async () => {
     try {
       if(connectedId){
-        const results = await axios.get('http://localhost:8000/api/users/'+connectedId+'/consultations')
-        setArticles(results.data.articles)
+        const results = await fetchData('/api/users/'+connectedId+'/consultations')
+        const data = await results.articles
+        const uniqueData = Object.values(
+          data.reduce((acc, item) => {
+            acc[item.nom] = item
+            return acc
+          }, {})
+        ) 
+        setArticles(uniqueData)
       }else{
         setArticles([])
       }
-      console.log(articles)
     } catch (error) {
       console.error('Error with articles:', error)
     }
@@ -90,14 +90,14 @@ const PartX = ({title, type, reload}) => {
   }
 
   return (
-    <div className='w-[30%] sm:w-[25%] h-[1200px] sm:h-[582px] overflow-y-hidden py-0 px-2 bg-gray-300'>
-        <div className="w-full text-black h-[5%] text-md sm:text-2xl md:text-lg font-bold flex flex-col items-center justify-center mb-3 top-0 bg-gray-300 ">
+    <div className='w-[30%] sm:w-[25%] sm:h-[1200px] md:h-[1200px] lg:h-[582px] overflow-y-hidden py-0 sm:px-2 '>
+        <div className="w-full text-blue-400 h-[5%] px-2 sm:text-sm md:text-md lg:text-2xl font-bold flex flex-col items-center justify-center mb-3 top-0 md:top-2 ">
             {title}
         </div>
 
             {
               !connectedId && (
-                <div className=' flex flex-col items-center justify-center mt-40 font-semibold text-xs sm:text-lg md:text-md'>
+                <div className=' flex flex-col items-center justify-center text-blue-400 mt-40 font-semibold text-xs sm:text-lg md:text-md'>
                   Connectez-vous
                 </div>
               )
@@ -109,9 +109,11 @@ const PartX = ({title, type, reload}) => {
                 {
                   sortedData.length > 0 ? (
                     sortedData.map((item,i) => (
-                      <ArticleCard key={i} number={item.numero} name={item.nom} content={item.contenu} onClick={(e) => handleClick(item.id)} />
+                      <>
+                        <ArticleCard key={i} number={item.numero} name={item.nom} content={item.contenu} onClick={(e) => handleClick(item.id)} />
+                      </>
                     ))
-                  ) : <div className='flex flex-col items-center justify-center mt-40 font-semibold text-xs sm:text-lg md:text-md'>
+                  ) : <div className='flex flex-col items-center justify-center text-blue-400 mt-40 font-semibold text-xs sm:text-lg md:text-md'>
                         Aucune consultation
                       </div>
                 }
@@ -141,9 +143,11 @@ const PartX = ({title, type, reload}) => {
                 {
                   events.length > 0 ? (
                     events.map((item) => (
-                      <EventCard number={item.id}  content={item.contenu} />
+                      <>
+                        <EventCard number={item.id}  content={item.contenu} />
+                      </>
                     ))
-                  ) : <div className='flex flex-col items-center justify-center mt-40 font-semibold text-xs sm:text-lg md:text-md'>
+                  ) : <div className='flex flex-col items-center justify-center mt-40 text-blue-400  font-semibold text-xs sm:text-lg md:text-md'>
                        Aucun fait signaler
                      </div>
                 }

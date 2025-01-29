@@ -72,17 +72,17 @@ const ShowCard = ({ onShowForm, content, numero, name }) => {
 
   return (
     <div className='flex flex-col w-full border-2 border-gray-200 rounded-sm mb-2'>
-      <div className="flex flex-row space-x-2 items-center p-3 bg-[#6acde5]">
-        <div className="text-white font-bold text-lg">{'Article '+ numero + ' :'}</div>
-        <div className="text-white font-semibold text-md">{name}</div>
+      <div className="flex flex-row space-x-2 items-center p-3 bg-blue-400">
+        <div className="text-white font-bold sm:text-sm md:text-md lg:text-lg">{'Article '+ numero + ' :'}</div>
+        <div className="text-white font-semibold sm:text-xs md:text-sm md:text-md ">{name}</div>
       </div>
-      <div className="flex flex-grow justify-center p-3 max-h-[300px] overflow-y-auto">
+      <div className="flex flex-grow justify-center p-3 max-h-[300px] overflow-y-auto sm:text-xs md:text-sm lg:text-md">
         {content}
       </div>
-      <div className='flex flex-row items-center justify-between py-3 px-4 bg-gray-200'>
+      <div className='flex flex-row items-center justify-between py-3 px-4 bg-gray-100'>
         <div className="items-center justify-center flex flex-col relative group">
-          <button onClick={handleVis}>
-            <Mic className='flex flex-col items-center justify-center font-semibold text-violet-500' size={23} />
+          <button className=' flex flex-col items-center justify-center text-white bg-violet-500 rounded-full h-8 w-8 ' onClick={handleVis}>
+            <Mic className=' font-semibold ' size={18} />
           </button>
             {showLangage && (
               <div className="absolute overflow-y-auto w-60 max-h-[100px] top-0 left-10 w-auto bg-white border border-gray-300 shadow-lg 
@@ -96,8 +96,8 @@ const ShowCard = ({ onShowForm, content, numero, name }) => {
             )}
         </div>
         <div className="items-center justify-center flex flex-row relative group">
-          <button onClick={handleShow}>
-            <MessageCircle className='flex flex-col items-center justify-center font-semibold text-blue-500' size={23} />
+          <button className=' flex flex-col items-center justify-center text-white bg-blue-500 rounded-full h-8 w-8 ' onClick={handleShow}>
+            <MessageCircle className='font-semibold' size={18} />
           </button>
           {show && (
             <div className="absolute top-0 left-10 w-32 bg-white border border-gray-300 shadow-lg rounded-md py-2 gap-2">
@@ -106,11 +106,11 @@ const ShowCard = ({ onShowForm, content, numero, name }) => {
             </div>
           )}
         </div>
-        <div className="items-center justify-center flex flex-col relative group">
-          <button className='h-8 w-8 items-center' onClick={handleShare}>
-            <Share className='flex flex-col items-center justify-center font-semibold text-red-500' size={23} />
+        <div className="items-center justify-center flex flex-row relative group">
+          <button className=' flex flex-col items-center justify-center text-white bg-red-500 rounded-full h-8 w-8 ' onClick={handleShare}>
+            <Share className='font-semibold' size={18} />
           </button>
-          {copy && <div className='absolute top-10 left-0 right-10 w-12 bg-white border border-gray-300 shadow-lg rounded-md py-2 gap-2'>Copié!</div>}
+          {copy && <div className='absolute right-10 bg-black text-white text-sm shadow-lg rounded-md py-2 px-3 gap-2'>Copié!</div>}
         </div>
       </div>
     </div>
