@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react'
 import CommentCard from './CommentCard'
 import ShowCard from './ShowCard'
 import { useParams } from 'react-router-dom'
-import { CheckCircle, X } from 'lucide-react'
-import axios from 'axios'
+import { CheckCircle, X } from 'lucide-react' 
 import {fetchData, postData} from '../api'
 
-const ArticlePart = () => {
+const ArticlePart = ({ onNewFact }) => {
     const [article, setArticle] = useState([])
     const [comments, setComments] = useState([])
     const [contenu, setContenu] = useState(null)
@@ -48,33 +47,31 @@ const ArticlePart = () => {
 
 
     const handleSubmit = async (e) => {
-      e.preventDefault()
+      e.preventDefault();
       const dataSend = {
         user_id :user_id, 
         article_id: id, 
         contenu : contenu
-      }
+      };
       try {
         if (submitButtonText === 'Commentaire') {
-          const response = await postData('/api/comments', dataSend)
-          if (response.status===200 ||response.status===201) {
-            try {
-              const response = await fetchData('/api/articles/comments/'+id)
-              setComments(response.comments)
-            } catch (error) {
-              console.error('Error Message', error)
-            }
+          const response = await postData('/api/comments', dataSend);
+          if (response.status === 200 || response.status === 201) {
+            fetchComments(id);
           }
         }
         if (submitButtonText === 'Fait') {
-          const response = await postData('/api/events', dataSend)   
+          const response = await postData('/api/events', dataSend);  
+          if (response.status === 200 || response.status === 201) {
+            onNewFact(); // 👈 Met à jour PartX après ajout d'un fait
+          }
         }
-        setContenu('')
-        setShowForm(false)
+        setContenu('');
+        setShowForm(false);
       } catch (error) {
-        console.error('Error Message', error)
+        console.error('Error Message', error);
       }
-    }
+    };
 
     const handleShowForm = (buttonText) => {
       setShowForm(true)

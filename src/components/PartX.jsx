@@ -20,16 +20,7 @@ const PartX = ({title, type, reload}) => {
     if (type === 'fait') {
       fetchEvents(id)
     }
-  },[])
-
-  if(reload) {
-    if(type === 'redacteur'){
-      fetchArticles()
-    }
-    if (type === 'fait') {
-      fetchEvents(id)
-    }
-  }
+  },[reload])
  
 
   const fetchEvents = async (id) =>{

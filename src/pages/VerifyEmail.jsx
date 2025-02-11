@@ -3,7 +3,7 @@ import LogNavbar from '../components/LogNavbar'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import logo from '../uploads/logo.jpeg';
-import axios from 'axios'
+import axios from 'axios' 
 import { useNavigate, useParams } from 'react-router-dom';
 
 const VerifyEmail = () => {

@@ -149,17 +149,17 @@ const AddArticle = () => {
                     <div className='flex flex-col space-y-2 px-6 py-2 items-center justify-center w-full'>
                         {
                             success && (
-                                <div className='flex flex-col sm:flex-row space-y-1 items-center justify-center mb-2 w-full py-3 px-3 bg-green-300 rounded-sm'>
+                                <div className='flex flex-col sm:flex-row items-center justify-center sm:justify-between mb-2 w-full py-2 px-3 sm:px-10 bg-green-300 rounded-md'>
                                     <div className="text-sm font-semibold ">{success}</div>
-                                    <X onClick={handleSetSuccess} className='text-sm hover:cursor-pointer text-gray-700' />
+                                    <X onClick={handleSetSuccess} className='text-sm hover:cursor-pointer text-red-700 h-4 w-4' />
                                 </div>
                             ) 
                         }
                         {
                             error && (
-                                <div className='flex flex-col sm:flex-row space-y-1 items-center justify-between mb-2 w-full py-3 px-3 bg-red-300 rounded-sm'>
+                                <div className='flex flex-col sm:flex-row text-white items-center justify-center sm:justify-between mb-2 w-full py-2 px-3 sm:px-10 bg-red-300 rounded-md'>
                                     <div className="text-sm font-semibold">{error}</div>
-                                    <X onClick={handleSetError} className='text-sm hover:cursor-pointer  text-gray-700' />
+                                    <X onClick={handleSetError} className='text-sm hover:cursor-pointer text-gray-700 h-4 w-4 ' />
                                 </div>
                             ) 
                         }

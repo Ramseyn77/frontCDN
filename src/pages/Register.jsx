@@ -35,7 +35,7 @@ const Register = () => {
 
 
   const handleRegister = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     try {
       const response = await axios.post('http://localhost:8000/api/users', user)
       if (response.data.user) {
