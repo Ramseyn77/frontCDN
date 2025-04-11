@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom'
 import SideBar from '../components/SideBar'
 import {MenuIcon, UserCircle, SearchIcon } from 'lucide-react';
 import {fetchData, postData} from '../api'
+import Cookies from 'js-cookie'
 
 const Search = () => {
   const [user, setUser] = useState(null);
@@ -12,15 +13,16 @@ const Search = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showDiv, setShowDiv] = useState(false);
   const navigate = useNavigate()
+  const [user_id, setUserId] = useState(null); 
+  const userData = Cookies.get('user_data')
   
-  const user_id = localStorage.getItem('user_id')
   useEffect(() => {
     fetchArticles()
-    const accessToken = localStorage.getItem('accessToken');
-    const userc = localStorage.getItem('user');
-    const id = localStorage.getItem('user_id');
-    if (accessToken && userc) {
-      fetchUser(id);
+    const userData = Cookies.get('user_data')  
+    if (userData) {
+      const user_data = JSON.parse(userData)
+      setUserId(user_data.id)
+      fetchUser(user_data.id);
     }
   },[])
 
@@ -44,9 +46,7 @@ const Search = () => {
   const handleLogout = async () => {
     try {
       await postData('/api/logout');
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('user');
-      localStorage.removeItem('user_id');
+      Cookies.remove('user_data')
       navigate('/login');
     } catch (error) {
       console.error('Error logging out', error);

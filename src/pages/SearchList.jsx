@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import axios from 'axios';
+import Cookies from 'js-cookie';
 import {fetchData, postData} from '../api'
 
 const SearchList = () => {
   const { word } = useParams();
   const [articles, setArticles] = useState([]);
   const [results, setResults] = useState([]);
-
-  const user_id = localStorage.getItem('user_id')
+  const [user_id, setUserId] = useState(null); 
+  
   useEffect(() => {
+    const userData = Cookies.get('user_data')
+    if (userData){ 
+      const user_data = JSON.parse(userData)
+      setUserId(user_data.id)
+    }
     const fetchArticles = async () => {
       try {
         const response = await fetchData('/api/articles');

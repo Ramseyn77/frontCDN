@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import {fetchData, postData} from '../api'
 import { ArrowRight, CheckCircle, X } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 const AddQuiz = () => {
     const [question, setQuestion] = useState({
@@ -33,9 +34,10 @@ const AddQuiz = () => {
             'status' : ''
         },
 ])
-    const [user, setUser] = useState([])
+    const [user, setUser] = useState(null) 
     const [articles, setArticles] = useState([])
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(false) 
+    const userData = Cookies.get('user_data')
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -46,24 +48,21 @@ const AddQuiz = () => {
         newReponses[index][field] = value;
         setReponses(newReponses);
     };
-    const fetchUser = async () => {
-        const accessToken = localStorage.getItem('accessToken');
-        const id = localStorage.getItem('user_id');
+    const fetchUser = async (id) => {  
         try {
-            const response = await fetchData('/api/users/' + id);
-            const fetchedUser = response.user;
-            setUser(fetchedUser);
-            if (!accessToken || fetchedUser.status !== 2) {
-                navigate('/notFound');
-                return;
-            }
+            const response = await fetchData('/api/users/' + id) 
+            setUser(response.user);
+            if (!userData ||response.user.status !== 2)  navigate('/notFound') 
         } catch (error) {
             console.error('Message', error);
             navigate('/notFound');
         }
     };
     useEffect(() => {
-        fetchUser()
+        if (userData){ 
+            const user_data = JSON.parse(userData) 
+            fetchUser(user_data.id)
+        }
         fetchArticles()
     }, [])
     const fetchArticles = async () => {
@@ -71,7 +70,7 @@ const AddQuiz = () => {
             const results = await fetchData('/api/articles') 
             setArticles(results.articles)
         }catch(error){
-            console.error('Something went wrp,g ', error)
+            console.error('Something went wrong ', error)
         }
     }
 

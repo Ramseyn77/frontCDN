@@ -2,11 +2,11 @@ import React, { useState,useEffect } from 'react'
 import {useNavigate} from 'react-router-dom'
 import LogNavbar from '../components/LogNavbar'
 import InputForm from '../components/InputForm';
-import logo from '../uploads/logo.jpeg';
-import google from '../uploads/google.png';
+import logo from '../uploads/logo.jpeg'; 
 import { NavLink } from 'react-router-dom';
 import InputPassword from '../components/InputPassword';
 import axios from 'axios'
+import Cookies from "js-cookie"
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -18,14 +18,13 @@ const Register = () => {
   })
   const [errors, setErrors] = useState({})
   const navigate = useNavigate()
-  useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    const user = localStorage.getItem('user')
-    if (accessToken && user) {
+  
+  useEffect(() => {    
+    const userData  = Cookies.get('user_data')
+    if (userData) {
       navigate('/');
       return;
     }
-
   },[])
 
   const handleChange = (e) => {

@@ -6,6 +6,7 @@ import logo from '../uploads/logo.jpeg';
 import {SearchIcon} from 'lucide-react'
 import SideBar from '../components/SideBar';
 import {UserCircle, MenuIcon, PlusCircleIcon} from 'lucide-react'
+import Cookies from 'js-cookie';
 
 const Navbar = ({ link }) => {
   const navigate = useNavigate();
@@ -37,11 +38,10 @@ const Navbar = ({ link }) => {
   }
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    const userc = localStorage.getItem('user');
-    const id = localStorage.getItem('user_id');
-    if (accessToken && userc) {
-      fetchUser(id);
+    const userData = Cookies.get('user_data')     
+    if (userData) {
+      const user_data = JSON.parse(userData) 
+      fetchUser(user_data.id);
     }
   }, []);
 
@@ -56,9 +56,7 @@ const Navbar = ({ link }) => {
   const handleLogout = async () => {
     try {
       await postData('/api/logout');
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('user');
-      localStorage.removeItem('user_id');
+      Cookies.remove('user_data')
       navigate('/login');
     } catch (error) {
       console.error('Error logging out', error);

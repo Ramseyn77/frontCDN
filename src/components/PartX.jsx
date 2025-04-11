@@ -3,12 +3,22 @@ import ArticleCard from './ArticleCard'
 import {fetchData} from '../api'
 import EventCard from './EventCard'
 import { useParams, useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 const PartX = ({title, type, reload}) => {
   const {id} = useParams()
   const [articles, setArticles] = useState([])
   const [events, setEvents] = useState([])
-  const connectedId = localStorage.getItem('user_id') 
+  const userData  = Cookies.get('user_data')
+  const [connectedId, setconnectId] = useState(null)
+   
+  useEffect(()  => {
+    if(userData) { 
+      const user_data = JSON.parse(userData)
+      setconnectId(user_data.id)
+    }
+
+  }) 
 
   useEffect(()=>{
     if(type === 'redacteur'){
@@ -51,7 +61,7 @@ const PartX = ({title, type, reload}) => {
             acc[item.nom] = item
             return acc
           }, {})
-        ) 
+        )
         setArticles(uniqueData)
       }else{
         setArticles([])

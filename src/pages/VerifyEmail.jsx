@@ -20,8 +20,7 @@ const VerifyEmail = () => {
     const data = {'code' : code}
     console.log(data)
     try {
-      const response = await axios.post('http://localhost:8000/api/users/emailVerify/'+id, data)
-      console.log(response)
+      const response = await axios.post('http://localhost:8000/api/users/emailVerify/'+id, data) 
       navigate('/login')
     } catch (error) {
       if (error.response && error.response.status === 401) {

@@ -1,25 +1,31 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Navbar from '../components/Navbar';
+import {fetchData, postData} from '../api'
+import Cookies from 'js-cookie'
 
 const List = () => {
     const {id,type} = useParams()
     const [articles, setArticles] = useState([])
-
-    const user_id = localStorage.getItem('user_id')
+    const [user_id, setUserId] = useState(null); 
+     
     useEffect(() => {
+      const userData = Cookies.get('user_data')
+      if (userData){ 
+        const user_data = JSON.parse(userData)
+        setUserId(user_data.id)
+      }
       fetcArticles()
     },[])
 
     const fetcArticles = async () => {
        try {
           if (type === 'titre') {
-              const response = await axios.get('http://localhost:8000/api/titres/'+id+'/articles')
-              setArticles(response.data.articles)
+              const response = await fetchData('/api/titres/'+id+'/articles')
+              setArticles(response.articles)
           }else if(type === "chapitre"){
-              const response = await axios.get('http://localhost:8000/api/chapitres/'+id+'/articles')
-              setArticles(response.data.articles)
+              const response = await fetchData('/api/chapitres/'+id+'/articles')
+              setArticles(response.articles)
           }else {
               setArticles([])
           }
@@ -35,7 +41,7 @@ const List = () => {
             user_id : user_id,
             article_id : id
           }
-          const response = await axios.post('http://localhost:8000/api/consultations', dataSend)
+          const response = await postData('/api/consultations', dataSend)
           console.log(response.data.message)
         }
         navigate('/articles/show/'+id)

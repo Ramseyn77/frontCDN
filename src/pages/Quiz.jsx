@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
-import axios from 'axios';
+import {fetchData, postData} from '../api' 
 import Navbar from '../components/Navbar';
 import QuizM from '../components/QuizM';
 import QuizO from '../components/QuizO';
@@ -15,12 +14,12 @@ const Quiz = () => {
 
     const fetchRessource = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/api/questions');
-            setQuizs(response.data.questions);
+            const response = await fetchData('/api/questions');
+            setQuizs(response.questions);
 
-            if (response.data.questions.length > 0) {
-                const rdId = Math.floor(Math.random() * response.data.questions.length);
-                setQuiz(response.data.questions[rdId]);
+            if (response.questions.length > 0) {
+                const rdId = Math.floor(Math.random() * response.questions.length );
+                setQuiz(response.questions[rdId]);
             }
         } catch (error) {
             console.error("Erreur lors de la récupération des ressources", error);

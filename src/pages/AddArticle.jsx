@@ -7,6 +7,7 @@ import {CheckCircle} from 'lucide-react'
 import {fetchData, postData} from '../api'
 import ConfirmPage from '../components/ConfirmPage'
 import {X} from 'lucide-react'
+import Cookies from 'js-cookie'
 
 const AddArticle = () => {
     const [success , setSucess] = useState(false)
@@ -25,24 +26,22 @@ const AddArticle = () => {
     const [chapitres, setChapitres] = useState([])
     const [sections , setSections] = useState([])
     const [show, setShow] = useState(false)
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null) 
     const navigate = useNavigate()
-    useEffect(() => {
-       fetchUser();
-    }, []);
     
-
-    const fetchUser = async () => {
-        const accessToken = localStorage.getItem('accessToken');
-        const id = localStorage.getItem('user_id');
+    const userData = Cookies.get('user_data')
+    useEffect(() => {
+        if (userData){ 
+            const user_data = JSON.parse(userData) 
+            fetchUser(user_data.id);
+        }
+    }, []); 
+    
+    const fetchUser = async (id) => {       
         try {
-            const response = await fetchData('/api/users/' + id);
-            const fetchedUser = response.user;
-            setUser(fetchedUser);
-            if (!accessToken || fetchedUser.status !== 2) {
-                navigate('/notFound');
-                return;
-            }
+            const response = await fetchData('/api/users/' + id) 
+            setUser(response.user);
+            if (!userData || response.user.status !== 2)  navigate('/notFound') 
             fetchLivres();
         } catch (error) {
             console.error('Message', error);

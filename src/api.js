@@ -37,7 +37,7 @@ export const postData = async (endpoint, data=null) => {
             })
             return response
         } catch (error) {
-            console.error('Erreur lors de la requète GET:, error')
+            console.error('Erreur lors de la requète POST:, error')
             throw error
         }
     }

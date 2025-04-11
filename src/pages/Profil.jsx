@@ -4,6 +4,7 @@ import axios from 'axios';
 import {fetchData, postData} from '../api'
 import { MailIcon, Briefcase, UserCircle } from 'lucide-react';
 import Chargement from '../components/Chargement';
+import Cookies from 'js-cookie'
 
 const Profil = () => {
   const [user, setUser] = useState({
@@ -19,9 +20,10 @@ const Profil = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    const id = localStorage.getItem('user_id');
-    if (id) {
-      fetchUser(id);
+    const userData = Cookies.get('user_data')  
+    if (userData) {
+      const user_data = JSON.parse(userData)
+      fetchUser(user_data.id);
     }
   }, []);
 

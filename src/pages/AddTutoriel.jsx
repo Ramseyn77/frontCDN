@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import InputForm from '../components/InputForm'
 import Navbar from '../components/Navbar'
-import {postData} from '../api'
+import {postData, fetchData} from '../api'
+import Cookies from 'js-cookie'
 
 const AddTutoriel = () => {
     const [tutoriel, setTutoriel] = useState({
@@ -10,12 +11,33 @@ const AddTutoriel = () => {
         'contenu' : ''
     })
     const [errors, setErrors] = useState('')
+    const [user, setUser] = useState(null) 
     const [errorMessage, setErrorMessage] = useState('')
-    const navigate = useNavigate()
+    const navigate = useNavigate()  
+    const userData = Cookies.get('user_data')
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setTutoriel({ ...tutoriel, [name]: value });
-    }
+    } 
+
+    useEffect(() => {
+      if (userData){ 
+          const user_data = JSON.parse(userData) 
+          fetchUser(user_data.id) 
+      }
+    }, []) 
+  
+    const fetchUser = async (id) => {       
+        try {
+            const response = await fetchData('/api/users/' + id); 
+            setUser(response.user) 
+            if (!userData || response.user.status !== 2) navigate('/notFound')     
+        } catch (error) {
+            console.error('Message', error);
+            navigate('/notFound');
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault() 

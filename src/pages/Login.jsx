@@ -1,19 +1,17 @@
 import {React,useState, useEffect} from 'react';
 import LogNavbar from '../components/LogNavbar';
 import InputForm from '../components/InputForm';
-import logo from '../uploads/logo.jpeg';
-import google from '../uploads/google.png';
+import logo from '../uploads/logo.jpeg'; 
 import { NavLink, useNavigate } from 'react-router-dom';
 import InputPassword from '../components/InputPassword';
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 const Login = () => {
   const navigate = useNavigate()
-  useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    const user = localStorage.getItem('user')
-
-    if (accessToken && user) {
+  useEffect(() => {    
+    const user  = Cookies.get('user_data')  
+    if (user) {
       navigate('/');
       return;
     }
@@ -37,9 +35,13 @@ const Login = () => {
     try {
       const response = await axios.post('http://localhost:8000/api/login', userData) 
       if (response.data.token) {
-        localStorage.setItem('accessToken', response.data.token);
-        localStorage.setItem('user', response.data.user);
-        localStorage.setItem('user_id', response.data.user.id);
+
+        Cookies.set('user_data', JSON.stringify({
+          id : response.data.user.id,
+          user : response.data.user,
+          acesstoken : response.data.token
+        }), {expires : 2})
+        
         navigate('/')
       } else {
         setErrorMessage(response.data.message);

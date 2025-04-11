@@ -4,6 +4,7 @@ import ShowCard from './ShowCard'
 import { useParams } from 'react-router-dom'
 import { CheckCircle, X } from 'lucide-react' 
 import {fetchData, postData} from '../api'
+import Cookies from 'js-cookie'
 
 const ArticlePart = ({ onNewFact }) => {
     const [article, setArticle] = useState([])
@@ -12,9 +13,14 @@ const ArticlePart = ({ onNewFact }) => {
     const [showForm, setShowForm] = useState(false)
     const [submitButtonText, setSubmitButtonText] = useState('')
     const {id} = useParams()
-    const user_id = localStorage.getItem('user_id')
-    
+    const [user_id,setUserId] = useState(null) 
+      
     useEffect(()=>{
+      const userData = Cookies.get('user_data')
+      if(userData) { 
+        const user_data = JSON.parse(userData)
+        setUserId(user_data.id)
+      }
       fetchArticle(id)
       fetchComments(id)
     }, [])

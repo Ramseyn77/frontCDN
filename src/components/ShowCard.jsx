@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import profil from '../uploads/profile.png';
 import { useNavigate, useParams } from 'react-router-dom';
 import {Mic, MessageCircle, Share} from 'lucide-react'
 

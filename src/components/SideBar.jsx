@@ -1,6 +1,7 @@
 import {React, useState, useEffect} from 'react'
 import {NavLink, useNavigate} from 'react-router-dom'
 import {fetchData} from '../api'
+import Cookies from 'js-cookie'
 import {UserCircle, HomeIcon, NotebookIcon,Book , FolderKanban, FileQuestionIcon, SearchIcon, PlusCircleIcon, User} from 'lucide-react'
 
 
@@ -21,11 +22,10 @@ const SideBar = ({visible}) => {
   ]
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    const userc = localStorage.getItem('user');
-    const id = localStorage.getItem('user_id');
-    if (accessToken && userc) {
-      fetchUser(id);
+    const userData = Cookies.get('user_data')
+    if (userData) {
+      const user_data = JSON.parse(userData) 
+      fetchUser(user_data.id);
     }
   }, []);
   const handleOptionClick = () => {
@@ -45,7 +45,8 @@ const SideBar = ({visible}) => {
   };
 
   const handleClick = () => {
-    navigate('/profil')
+    navigate('/login')
+    if (user) navigate('/profil')
   }
 
   const renderAddLink = () => {

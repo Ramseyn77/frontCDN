@@ -1,5 +1,5 @@
 import {React, useState, useEffect} from 'react'
-import axios from 'axios'
+import {fetchData, postData} from '../api'
 
 const ConfirmPage = ({numero, nom, contenu,titre_id, section_id,chapitre_id, livre_id}) => {
   const [livre,setLivre] = useState({})
@@ -12,14 +12,14 @@ const ConfirmPage = ({numero, nom, contenu,titre_id, section_id,chapitre_id, liv
   })
   const fetchRessources = async () => {
    try {
-      const response = await axios.get('http://localhost:8000/api/livres/'+livre_id)
-      const resultat = await axios.get('http://localhost:8000/api/titres/'+titre_id)
-      const result = await axios.get('http://localhost:8000/api/chapitres/'+chapitre_id)
-      const log = await axios.get('http://localhost:8000/api/sections/'+section_id)
-      setLivre(response.data.livre)
-      setChapitre(result.data.chapitre)
-      setTitre(resultat.data.titre)
-      setSection(log.data.section)
+      const response = await fetchData('/api/livres/'+livre_id)
+      const resultat = await fetchData('/api/titres/'+titre_id)
+      const result = await fetchData('/api/chapitres/'+chapitre_id)
+      const log = await fetchData('/api/sections/'+section_id)
+      setLivre(response.livre)
+      setChapitre(result.chapitre)
+      setTitre(resultat.titre)
+      setSection(log.section)
    } catch (error) {
     console.error('problem :', error)
    }
