@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {Mic, MessageCircle, Share} from 'lucide-react'
+import Cookies from 'js-cookie'
+
 
 const ShowCard = ({ onShowForm, content, numero, name }) => {
   const [show, setShow] = useState(false);
@@ -58,10 +60,8 @@ const ShowCard = ({ onShowForm, content, numero, name }) => {
 
   const navigate  = useNavigate()
   const handleButtonClick = (text) => {
-    const accessToken = localStorage.getItem('accessToken');
-    const user = localStorage.getItem('user')
-
-    if (!accessToken && !user) {
+    const user  = Cookies.get('user_data') 
+    if (!user) {
       navigate('/login');
       return;
     }
